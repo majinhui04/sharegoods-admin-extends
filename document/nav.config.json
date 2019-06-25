@@ -1,0 +1,48 @@
+{
+    "zh-CN": [
+        {
+            "name": "开发指南",
+            "children": [
+                {
+                    "path": "/installation",
+                    "name": "安装"
+                }
+            ]
+        },
+        {
+            "name": "项目说明",
+            "children": [
+                {
+                    "path": "/capital",
+                    "name": "资金中心"
+                }
+            ]
+        },
+        {
+            "name": "组件",
+            "groups": [
+                {
+                    "groupName": "Basic",
+                    "list": [
+                        {
+                            "path": "/query",
+                            "title": "基本查询页demo"
+                        },
+                        {
+                            "path": "/export-button",
+                            "title": "导出按钮"
+                        },
+                        {
+                            "path": "/chart",
+                            "title": "图表"
+                        },
+                        {
+                            "path": "/layout",
+                            "title": "Layout 布局"
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

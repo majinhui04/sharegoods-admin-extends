@@ -1,0 +1,69 @@
+{
+    "name": "sharegoods-admin-extends",
+    "version": "1.0.0",
+    "description": "plugins for Admin BU",
+    "scripts": {
+        "dev": "npm run serve",
+        "serve": "vue-cli-service serve",
+        "build": "vue-cli-service build",
+        "lint": "vue-cli-service lint",
+        "lib": "vue-cli-service build --target lib --name index --dest lib src/index.js"
+    },
+    "main":"./lib/index.common.js",
+    "devDependencies": {
+        "@babel/core": "7.0.0",
+        "@babel/register": "7.0.0",
+        "@vue/cli-plugin-babel": "3.7.0",
+        "@vue/cli-plugin-eslint": "3.7.0",
+        "@vue/cli-service": "3.7.0",
+        "@vue/component-compiler-utils": "^3.0.0",
+        "@vue/eslint-config-standard": "4.0.0",
+        "axios": "0.18.0",
+        "babel-eslint": "10.0.1",
+        "chalk": "2.4.1",
+        "chokidar": "2.1.5",
+        "core-js": "2.6.5",
+        "echarts": "4.2.1",
+        "element-ui": "2.8.2",
+        "eslint": "5.16.0",
+        "eslint-plugin-vue": "5.0.0",
+        "highlight.js": "^9.15.8",
+        "js-cookie": "2.2.0",
+        "markdown-it": "^8.4.2",
+        "markdown-it-anchor": "^5.2.4",
+        "markdown-it-chain": "^1.3.0",
+        "markdown-it-container": "^2.0.0",
+        "mockjs": "1.0.1-beta3",
+        "moment": "2.24.0",
+        "node-sass": "^4.9.0",
+        "sass-loader": "^7.1.0",
+        "transliteration": "^2.1.3",
+        "vue": "2.5.17",
+        "vue-router": "3.0.1",
+        "vue-template-compiler": "2.5.17",
+        "xlsx": "^0.14.3"
+    },
+    "peerDependencies": {
+        "vue": "2.5.17",
+        "element-ui": "2.8.2",
+        "moment": "2.24.0",
+        "axios": "0.18.0"
+    },
+    "keywords": [
+        "sharegoods"
+    ],
+    "author": {
+        "name": "Ma Jinhui",
+        "email": "majinhui@foxmail.com"
+    },
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/majinhui04/sharegoods-admin-extends/issues"
+    },
+    "homepage": "https://github.com/majinjinhui04/sharegoods-admin-extends#readme",
+    "browserslist": [
+        "> 1%",
+        "last 2 versions",
+        "not ie <= 9"
+    ]
+}
