@@ -36,9 +36,9 @@ module.exports = {
                 }
             ]
         });
-        // config.externals = {
-        //     'echarts': 'echarts'
-        // };
+        config.externals = {
+            'echarts': 'echarts'
+        };
     },
     // 允许对内部的 webpack 配置进行更细粒度的修改。
     chainWebpack: (config) => {

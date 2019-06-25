@@ -1,6 +1,8 @@
+let presets = ['@vue/app'];
+
+if(process.env['ENV'] === 'Utils') {
+    presets = ['@babel/preset-env']
+}
 module.exports = {
-    presets: [
-        '@vue/app',
-        '@babel/preset-env'
-    ]
+    presets
 };

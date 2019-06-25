@@ -1,14 +1,13 @@
 {
     "name": "sharegoods-admin-extends",
-    "version": "1.0.1",
+    "version": "1.0.2",
     "description": "a solution for Admin BU",
     "scripts": {
         "dev": "npm run serve",
         "serve": "vue-cli-service serve",
         "build": "vue-cli-service build",
         "lint": "vue-cli-service lint",
-        "build:utils": "cross-env babel src --out-dir lib --ignore src/index.js",
-        "build:utils1": "cross-env babel-node src2/util",
+        "build:utils": "cross-env ENV=Utils babel src  --out-dir lib --ignore src/index.js",
         "dist": "npm run lib && npm run build:utils",
         "lib": "vue-cli-service build --target lib --name index --dest lib src/index.js"
     },

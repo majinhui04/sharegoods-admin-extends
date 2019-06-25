@@ -4,6 +4,9 @@ import TableEditor from '../packages/table-editor/index.js';
 import Loading from '../packages/loading/index.js';
 import ExportButton from '../packages/export-button/index.js';
 import Chart from '../packages/chart/index.js';
+
+import '../packages/portal/styles/index.scss';
+
 const components = [
     Chart,
     ExportButton,
