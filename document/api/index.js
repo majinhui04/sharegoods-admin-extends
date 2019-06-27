@@ -1,9 +1,9 @@
 import Vue from 'vue';
 import Urls from './api.js';
-import { getToken, setToken } from '@/utils/auth';
+import { getToken, setToken } from '../utils/auth';
 import { Message } from 'element-ui';
-import $console from '@/utils/logger';
-import HttpClient from '@/utils/http/http-client';
+import $console from 'sharegoods-ui/utils/logger';
+import HttpClient from 'sharegoods-ui/utils/http/http-client';
 
 Vue.use(HttpClient, {
     Message,

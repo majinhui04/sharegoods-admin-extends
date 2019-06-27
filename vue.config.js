@@ -6,7 +6,7 @@ function resolve(dir) {
     return path.join(__dirname, dir);
 }
 
-const port = 9891;
+const port = 9999;
 module.exports = {
     outputDir: 'dist',
     publicPath: '/',
@@ -45,7 +45,7 @@ module.exports = {
         // 命名
         config.resolve.alias
             .set('@', resolve('src'))
-            .set('sharegoods', resolve('src'));
+            .set('sharegoods-ui', resolve('src'));
         // 打包文件带hash
         // config.output.filename('[name].[hash].js').end();
         config.output

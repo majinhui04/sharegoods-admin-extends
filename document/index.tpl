@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="/2.8/docs.css">
     <title>Sharegoods UI framework</title>
     <!--<script src="https://cdn.jsdelivr.net/npm/echarts@4.2.1/dist/echarts.js"></script>-->
-    <!--<script src="/static/js/echarts/4.2.1/echarts.min.js"></script>-->
+    <script src="/static/js/echarts/4.2.1/echarts.min.js"></script>
 
   </head>
   <body>

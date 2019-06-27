@@ -10,7 +10,7 @@ import MainFooter from './components/footer';
 import MainHeader from './components/header';
 import SideNav from './components/side-nav';
 import FooterNav from './components/footer-nav';
-import SharegoodsUI from '../dist/index.umd';
+import SharegoodsUI from 'sharegoods-ui/index.js';
 import moment from 'moment';
 
 console.log(123, SharegoodsUI.version);
