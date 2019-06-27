@@ -1,2 +1,2 @@
-import HttpControl from './http-middleware';
+import HttpControl from './http-client';
 export default HttpControl;
