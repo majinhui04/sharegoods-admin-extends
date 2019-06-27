@@ -43,6 +43,23 @@
                     ]
                 }
             ]
+        },
+        {
+            "name": "分享",
+            "children": [
+                {
+                    "path": "/git",
+                    "name": "git"
+                },
+                {
+                    "path": "/npm",
+                    "name": "npm"
+                },
+                {
+                    "path": "/vscode",
+                    "name": "vscode"
+                }
+            ]
         }
     ]
 }

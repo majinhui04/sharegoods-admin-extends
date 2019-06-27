@@ -1,5 +1,5 @@
 <template>
-    <footer class="footer">
+    <footer class="footer" style="display: none">
         <div class="container">
             <div class="footer-main">
                 <h4>{{ langConfig.links }}</h4>
@@ -10,7 +10,7 @@
 
             </div>
             <div class="footer-social">
-                <p class="footer-social-title">Element {{ version && version.slice(0, 3) }} Fullerene</p>
+                <p class="footer-social-title"></p>
             </div>
         </div>
     </footer>

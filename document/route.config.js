@@ -78,6 +78,17 @@ let route = [
                 },
                 name: 'component-layout',
                 component: resolve => require(['./docs/zh-CN/layout.md'], resolve)
+            },
+            // share
+            {
+                path: 'git',
+                meta: {
+                    title: 'git',
+                    description: 'git',
+                    lang
+                },
+                name: 'share-git',
+                component: resolve => require(['./docs/share/todo.md'], resolve)
             }
         ]
     }

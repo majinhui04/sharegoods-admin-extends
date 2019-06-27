@@ -291,7 +291,7 @@
                     <li class="nav-item">
                         <router-link
                             active-class="active"
-                            :to="`/${ lang }/component`">{{ langConfig.components }}
+                            :to="`/${ lang }/component`">指南
                         </router-link>
                     </li>
                     <!-- gap -->

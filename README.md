@@ -1,10 +1,10 @@
-# sharegoods-admin-extends
+# sharegoods-ui
 
 ![](https://www.sharegoodsmall.com/images/sglogo.png)
 
 ---
 
-vue2 + vuex + vue-router + webpack + ES6 + axios + sass + Element UI + iconfont + ESlint
+vue2 + vuex + vue-router + axios + sass + Element UI
 
 
 
