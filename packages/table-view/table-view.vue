@@ -166,6 +166,8 @@
                     this.total = result.total;
                     this.listLoading = false;
                 }).catch(() => {
+                    this.dataSource = [];
+                    this.total = 0;
                     this.listLoading = false;
                 });
             }

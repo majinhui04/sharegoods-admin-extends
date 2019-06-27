@@ -6,6 +6,7 @@ function resolve(dir) {
     return path.join(__dirname, dir);
 }
 
+const isProd = process.env.NODE_ENV === 'production';
 const port = 9999;
 module.exports = {
     outputDir: 'dist',
@@ -16,7 +17,7 @@ module.exports = {
         index: {
             entry: './document/entry.js',
             title: '文档',
-            template: './document/index.tpl'
+            template: './document/index.html'
         }
     },
     configureWebpack: (config) => {
@@ -36,9 +37,11 @@ module.exports = {
                 }
             ]
         });
-        config.externals = {
-            'echarts': 'echarts'
-        };
+        if (isProd) {
+            config.externals = {
+                'echarts': 'echarts'
+            };
+        }
     },
     // 允许对内部的 webpack 配置进行更细粒度的修改。
     chainWebpack: (config) => {
@@ -50,7 +53,7 @@ module.exports = {
         // config.output.filename('[name].[hash].js').end();
         config.output
             .set('libraryExport', 'default')
-            .set('library', 'SharegoodsUI')
+            .set('library', 'SharegoodsUI');
 
         // 为了补删除换行而加的配置
         config.module
