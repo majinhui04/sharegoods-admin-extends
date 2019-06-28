@@ -88,7 +88,6 @@
                     } else {
                         this.$emit('success');
                     }
-
                 } else {
                     const { data } = await flatry(this.$http.request(method, this.api, params, formData));
                     this.loading = false;
