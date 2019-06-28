@@ -43,9 +43,11 @@ export const qs = {
         var tail = uri.split('?').slice(1).join('');
 
         for (var n = tail.split('&'), i = 0; i < n.length; i++) {
-            var r = n[i]; var d = r.indexOf('=');
+            var r = n[i];
+            var d = r.indexOf('=');
             if (!(d < 0 || d === r.length - 1)) {
-                var key = r.substring(0, d); var value = r.substring(d + 1);
+                var key = r.substring(0, d);
+                var value = r.substring(d + 1);
                 key.length !== 0 && value.length !== 0 && (result[key] = decodeURIComponent(value));
             }
         }
@@ -63,3 +65,18 @@ export const qs = {
     }
 };
 
+export function downloadFile(url) {
+    const ts = +new Date();
+    const uri = url.indexOf('?') > -1 ? url + '&ts=' + ts : url + '?ts=' + ts;
+    try {
+        var elemIF = document.createElement('iframe');
+        elemIF.src = uri;
+        elemIF.style.display = 'none';
+        document.body.appendChild(elemIF);
+        setTimeout(function () {
+            document.body.removeChild(elemIF);
+        }, 1000);
+    } catch (e) {
+        console.error('downloadFile', e);
+    }
+}

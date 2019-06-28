@@ -135,7 +135,7 @@ export default [
             sleep(1.5 * 1000);
             return {
                 code: 0,
-                data: 'success'
+                data: '/static/test.xlsx'
             };
         }
     }

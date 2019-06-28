@@ -13,6 +13,7 @@
 
 <script>
     import flatry from '../../src/utils/flatry';
+    import { downloadFile } from '../../src/utils/util';
 
     export default {
         name: 'SgExportButton',
@@ -41,6 +42,10 @@
                 type: String,
                 default: 'POST'
             },
+            fileType: {
+                type: String,
+                default: 'blob'
+            },
             beforeExport: {
                 type: Function,
                 default() {
@@ -62,7 +67,7 @@
             handleClick: async function () {
                 this.$emit('click');
                 const result = this.beforeExport();
-                if(result === false) {
+                if (result === false) {
                     return false;
                 }
                 const form = { ...this.formData, ...result };
@@ -70,17 +75,35 @@
                 const params = method === 'POST' ? null : form;
                 const formData = method === 'POST' ? form : null;
                 this.loading = true;
-                const { data } = await flatry(this.$http.download(method, this.api, params, formData));
-                if (data === false) {
-                    this.$message({
-                        type: 'warning',
-                        message: '下载文件失败',
-                        duration: 1500
-                    });
-                    this.$emit('fail');
+                if (this.fileType === 'blob') {
+                    const { data } = await flatry(this.$http.download(method, this.api, params, formData));
+                    this.loading = false;
+                    if (data === false) {
+                        this.$message({
+                            type: 'warning',
+                            message: '下载文件失败',
+                            duration: 1500
+                        });
+                        this.$emit('fail');
+                    } else {
+                        this.$emit('success');
+                    }
+
+                } else {
+                    const { data } = await flatry(this.$http.request(method, this.api, params, formData));
+                    this.loading = false;
+                    if (!data.data) {
+                        this.$message({
+                            type: 'warning',
+                            message: '下载文件失败',
+                            duration: 1500
+                        });
+                        this.$emit('fail');
+                    } else {
+                        downloadFile(data.data);
+                        this.$emit('success');
+                    }
                 }
-                this.$emit('success');
-                this.loading = false;
             }
         }
     };

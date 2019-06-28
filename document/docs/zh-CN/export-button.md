@@ -9,6 +9,7 @@
 | type | 按钮类型| String | — | - |
 | disabled | 是否可用| Boolean | — | - |
 | tips | 导出提示语| String | — | - |
+| fileType | 导出类型| String | — | blob |
 | method | 导出接口方式| String | 'get' 'post' | 'post' |
 | before-export | 用于判断是否导出，如果是false则阻止导出请求，如果是对象则是导出的参数| Function | — | {} |
 
@@ -24,7 +25,7 @@
 ```html
 <template>
     <div class="content">
-        <sg-export-button api="/article/export" ref="exports" :before-export="handleExport" tips="正在导出数据,请稍后" @fail="handleFail">导出</sg-export-button>
+        <sg-export-button api="/article/export" ref="exports" :before-export="handleExport" tips="正在导出数据,请稍后" @fail="handleFail" file-type="blob">导出</sg-export-button>
     </div>
  </template>
  <script>
@@ -34,9 +35,10 @@
         },
         methods:{
             handleFail(){
-                this.$message({
-                    message:'sorry'
-                })
+                this.$notify({
+                  title: '标题名称',
+                  message: '下载接口好像不行'
+                });
             },
             handleExport(){
                 return  {
