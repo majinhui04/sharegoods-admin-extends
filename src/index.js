@@ -1,19 +1,21 @@
 import TableFilter from '../packages/table-filter/index.js';
 import TableView from '../packages/table-view/index.js';
-import TableEditor from '../packages/table-editor/index.js';
 import Loading from '../packages/loading/index.js';
 import ExportButton from '../packages/export-button/index.js';
 import DownloadButton from '../packages/download-button/index.js';
+import Pagination from '../packages/pagination/index.js';
 import Chart from '../packages/chart/index.js';
+
+import '../packages/styles/index.scss';
 
 const components = [
     Chart,
+    Pagination,
     DownloadButton,
     ExportButton,
     TableFilter,
     TableView,
-    Loading,
-    TableEditor
+    Loading
 ];
 
 const install = function (Vue, opts = {}) {

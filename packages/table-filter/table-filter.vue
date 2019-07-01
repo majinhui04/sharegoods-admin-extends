@@ -73,9 +73,3 @@
         }
     };
 </script>
-
-<style rel="stylesheet/scss" lang="scss" scoped>
-    .sg-filter-form {
-        overflow:hidden;
-    }
-</style>

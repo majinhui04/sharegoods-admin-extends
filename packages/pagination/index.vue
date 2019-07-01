@@ -1,5 +1,5 @@
 <template>
-    <div :class="{'hidden':hidden}" class="pagination-container" ref="sgPage" :style="style">
+    <div :class="{'hidden':hidden}" class="sg-pagination-container pagination-container" ref="sgPage" :style="style">
         <el-pagination
             :background="background"
             :current-page.sync="currentPage"
@@ -16,8 +16,12 @@
 
 <script>
     export default {
-        name: 'Pagination',
+        name: 'SgPagination',
         props: {
+            scrollContainer: {
+                type: String,
+                default: 'appContent'
+            },
             total: {
                 required: true,
                 type: Number
@@ -88,14 +92,14 @@
         methods: {
             handleSizeChange(val) {
                 this.$emit('pagination', { page: this.currentPage, limit: val });
-                const $content = document.getElementById('appContent');
+                const $content = document.getElementById(this.scrollContainer);
                 if ($content) {
                     $content.scrollTop = 0;
                 }
             },
             handleCurrentChange(val) {
                 this.$emit('pagination', { page: val, limit: this.pageSize });
-                const $content = document.getElementById('appContent');
+                const $content = document.getElementById(this.scrollContainer);
                 if ($content) {
                     $content.scrollTop = 0;
                 }
@@ -104,17 +108,3 @@
     };
 </script>
 
-<style scoped lang="scss">
-    .pagination-container {
-        text-align: right;
-        &.center {
-            text-align: center;
-        }
-        &.left {
-            text-align: left;
-        }
-        &.hidden {
-            display: none;
-        }
-    }
-</style>

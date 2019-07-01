@@ -176,29 +176,4 @@
 </script>
 
 <style rel="stylesheet/scss" lang="scss" scoped>
-    .sg-tabs {
-        width: 100%;
-    }
-
-    .sg-tools {
-        margin-bottom: 15px;
-        display: flex;
-
-    }
-
-    .sg-table {
-        margin-bottom: 15px;
-    }
-
-    .sg-pagination {
-        &.fixed {
-            height: 50px;
-            padding-top: 10px;
-            position: fixed;
-            bottom: 0;
-            background-color: #fff;
-            z-index: 10;
-            border: 1px solid #ddd;
-        }
-    }
 </style>

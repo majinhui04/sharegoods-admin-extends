@@ -11,6 +11,7 @@ import MainHeader from './components/header';
 import SideNav from './components/side-nav';
 import FooterNav from './components/footer-nav';
 import SharegoodsUI from 'sharegoods-ui/index.js';
+import moment from 'moment';
 import './assets/styles/common.scss';
 import icon from './icon.json';
 import { API } from './api';
