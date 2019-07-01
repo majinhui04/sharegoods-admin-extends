@@ -135,9 +135,6 @@
                 result[page] = params.page;
                 result[pageSize] = params.pageSize;
                 result[activeName] = params.activeName;
-                if (!result[activeName]) {
-                    delete result[activeName];
-                }
                 return result;
             },
             // 获取选中数据
@@ -146,7 +143,6 @@
             },
             // 点击tab触发数据加载
             handleTabClick(tab) {
-                console.log(123,this.activeName,tab);
                 this.activeName = tab.name;
                 this.fetchList({
                     page: 1
