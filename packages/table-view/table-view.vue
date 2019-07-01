@@ -1,5 +1,6 @@
 <template>
     <div class="sg-table-container">
+        <slot name="table-tools"></slot>
         <div class="sg-tools">
             <template v-for="(item,i) in tools">
                 <template v-if="item.type==='slot'">
@@ -12,7 +13,8 @@
                 </template>
             </template>
         </div>
-        <el-tabs v-model="activeName" @tab-click="handleTabClick" v-if="tabs" class="sg-tabs">
+        <slot name="table-tabs"></slot>
+        <el-tabs @tab-click="handleTabClick" v-if="tabs" class="sg-tabs">
             <el-tab-pane :label="tab.label" :name="tab.name" v-for="(tab,index) in tabs" :key="index"></el-tab-pane>
         </el-tabs>
         <el-table class="sg-table" v-loading="listLoading" :data="dataSource" border fit highlight-current-row
@@ -143,8 +145,9 @@
                 return this.multipleSelection;
             },
             // 点击tab触发数据加载
-            handleTabClick(k) {
-                this.activeName = k.name
+            handleTabClick(tab) {
+                console.log(123,this.activeName,tab);
+                this.activeName = tab.name;
                 this.fetchList({
                     page: 1
                 });
