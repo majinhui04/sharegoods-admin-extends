@@ -28,10 +28,8 @@ then
 
   if [[ $VERSION =~ "beta" ]]
     then
-      # npm publish --tag beta
-      echo "111."
+      npm publish --tag beta
     else
-      # npm publish
-      echo "2222."
+      npm publish
     fi
 fi
