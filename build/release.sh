@@ -1,6 +1,9 @@
 #!/usr/bin/env sh
 set -e
 
+git checkout master
+git merge dev
+
 VERSION=`npx select-version-cli`
 read -p "Releasing $VERSION - are you sure? (y/n)" -n 1 -r
 echo    # (optional) move to a new line
@@ -25,8 +28,10 @@ then
 
   if [[ $VERSION =~ "beta" ]]
     then
-      npm publish --tag beta
+      # npm publish --tag beta
+      echo "111."
     else
-      npm publish
+      # npm publish
+      echo "2222."
     fi
 fi
