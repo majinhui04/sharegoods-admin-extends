@@ -7,7 +7,7 @@ export default [
     {
         name: 'articleList',
         path: '/article/list',
-        method: 'get'
+        method: 'post'
     },
     {
         name: 'articleDetail',

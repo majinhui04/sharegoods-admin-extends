@@ -6,6 +6,7 @@ import $console from 'sharegoods-ui/utils/logger';
 import HttpClient from 'sharegoods-ui/utils/http/http-client';
 
 Vue.use(HttpClient, {
+    timeout: 15000,
     Message,
     Urls,
     transformRequest({ path, data }) {

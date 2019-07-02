@@ -225,7 +225,7 @@
                         
                     ],
                     load: (params) => {
-                        const data = { ...params, ...this.formData };
+                        const data = { ...params, ...this.formData,$timeout:10000 };
                         return this.$api.articleList(data,{isShowError:true});
                     }
                 }
@@ -247,7 +247,7 @@
             initArticleStatusList(){
                 let fields = this.filterConfig.fields;
                 let options = fields.filter(item=>item.name === 'status')[0].options;
-                this.$api.articleStatusList(null,{isShowError:true}).then(res=>{
+                this.$api.articleStatusList({$timeout:20000},{isShowError:true}).then(res=>{
                     options.push(...res.data);
                 });
             },

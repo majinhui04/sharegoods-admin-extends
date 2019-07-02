@@ -85,6 +85,8 @@ const HttpClient = {
             ...options
         };
         const request = new Request({
+            withCredentials: opt.withCredentials || false,
+            timeout: opt.timeout || 15000,
             baseUrl: opt.baseUrl,
             headers: opt.headers || {
                 'Content-Type': 'application/json'
@@ -191,7 +193,7 @@ const HttpClient = {
                         }).catch(err => {
                             console.error('httpClient err', err);
                         });
-                    })
+                    });
                 };
             });
             return result;

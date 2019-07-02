@@ -1,5 +1,6 @@
 import axios from 'axios';
 import qs from 'qs';
+import configureTimeout from './interceptors/timeout';
 
 // import axiosRetry from 'axios-retry'
 
@@ -8,7 +9,7 @@ class Request {
         const opt = {
             ...{
                 baseUrl: '',
-                timeout: 10000,
+                timeout: 15000, // 默认15s
                 withCredentials: false,
                 getClientId: () => {
                     return null;
@@ -50,8 +51,15 @@ class Request {
             if (accessToken) {
                 config.headers = Object.assign(config.headers, accessToken);
             }
+            // 参数中$timeout控制自定义超时时间
+            if (config.data && config.data.$timeout) {
+                config.timeout = config.data.$timeout;
+            }
+            if (config.params && config.params.$timeout) {
+                config.timeout = config.params.$timeout;
+            }
 
-            return config;
+            return configureTimeout(config);
         }, undefined);
 
         httpClient.interceptors.response.use((response) => {

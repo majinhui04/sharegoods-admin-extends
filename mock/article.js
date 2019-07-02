@@ -31,7 +31,7 @@ for (let i = 0; i < count; i++) {
 export default [
     {
         url: '/article/list',
-        type: 'get',
+        type: 'post',
         response: config => {
             const { importance, type, title, page = 1, limit = 20, sort } = config.query;
 
@@ -47,8 +47,8 @@ export default [
             }
 
             const pageList = mockList.filter((item, index) => index < limit * page && index >= limit * (page - 1));
-            // 模拟延时1.5s
-            sleep(1.5 * 1000);
+            // 模拟延时1s
+            sleep(1 * 1000);
             return {
                 code: 0,
                 data: {
