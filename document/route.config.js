@@ -30,6 +30,16 @@ let route = [
                 component: resolve => require(['./docs/zh-CN/installation.md'], resolve)
             },
             {
+                path: 'quick-start',
+                meta: {
+                    title: 'quick-start',
+                    description: 'quick-start',
+                    lang
+                },
+                name: 'component-quick-start',
+                component: resolve => require(['./docs/zh-CN/quick-start.md'], resolve)
+            },
+            {
                 path: 'capital',
                 meta: {
                     title: 'capital',

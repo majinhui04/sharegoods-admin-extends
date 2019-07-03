@@ -6,6 +6,10 @@
                 {
                     "path": "/installation",
                     "name": "安装"
+                },
+                {
+                    "path": "/quick-start",
+                    "name": "快速开发"
                 }
             ]
         },
