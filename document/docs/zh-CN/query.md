@@ -89,6 +89,7 @@
                     date: [new Date(+new Date()-30*24*60*60*1000),new Date()]
                 },
                 filterConfig: {
+                    labelWidth:'100px',
                     fields: [
                         {
                             name: 'date',

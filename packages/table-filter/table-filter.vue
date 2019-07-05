@@ -1,6 +1,10 @@
 <template>
     <div class="sg-filter-container">
-        <el-form :inline="true" ref="form" :model="formData" class="sg-filter-form">
+        <el-form :inline="true"
+                 ref="form"
+                 :model="formData"
+                 class="sg-filter-form"
+                 :label-width="labelWidth">
             <template :span="field.cols" v-for="(field, index) in config.fields">
                 <component
                     class="sg-form-item"
@@ -19,8 +23,10 @@
                 </component>
             </template>
             <slot name="buttons">
-                <el-button type="primary" @click="submit" size="small">{{onSubmitText}}</el-button>
-                <el-button type="default" @click="reset" size="small">{{onResetText}}</el-button>
+                <div class="actions">
+                    <el-button type="primary" @click="submit" size="small">{{onSubmitText}}</el-button>
+                    <el-button type="default" @click="reset" size="small">{{onResetText}}</el-button>
+                </div>
             </slot>
         </el-form>
     </div>
@@ -39,6 +45,7 @@
                 type: Object,
                 default() {
                     return {
+                        labelWidth: null,
                         fields: []
                     };
                 }
@@ -49,6 +56,7 @@
         },
         data() {
             return {
+                labelWidth: this.config.labelWidth || '120px',
                 formData: this.value,
                 onSubmitText: this.config.onSubmitText || '查询',
                 onResetText: this.config.onResetText || '重置'
