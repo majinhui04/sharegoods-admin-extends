@@ -47,7 +47,7 @@
         </el-table>
         <div class style="height: 14px;" v-if="paginationFixed"></div>
         <pagination v-show="total>0" :total="total" :page.sync="pagination.page" :limit.sync="pagination.pageSize"
-                    @pagination="fetchList" :class="{'fixed':paginationFixed}" class="right sg-pagination"/>
+                    @pagination="fetchList" :class="{'fixed':paginationFixed}" class="right sg-pagination" :layout="pageConfig.layout"/>
     </div>
 </template>
 
@@ -61,6 +61,14 @@
             paginationFixed: {
                 type: Boolean,
                 default: false
+            },
+            pageConfig: {
+                type: Object,
+                default() {
+                    return {
+                        layout: 'total, sizes, prev, pager, next, jumper'
+                    };
+                }
             },
             auto: {
                 type: Boolean,

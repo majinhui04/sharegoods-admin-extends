@@ -1,8 +1,9 @@
 <template>
     <div class="sg-filter-container">
         <el-form :inline="true" ref="form" :model="formData" class="sg-filter-form">
-            <el-col :span="field.cols" v-for="(field, index) in config.fields" :key="index">
+            <template :span="field.cols" v-for="(field, index) in config.fields">
                 <component
+                    class="sg-form-item"
                     :key="index"
                     :type="field.type"
                     :format="field.format"
@@ -16,7 +17,7 @@
                     :options="field.options"
                     :ref="field.name">
                 </component>
-            </el-col>
+            </template>
             <slot name="buttons">
                 <el-button type="primary" @click="submit" size="small">{{onSubmitText}}</el-button>
                 <el-button type="default" @click="reset" size="small">{{onResetText}}</el-button>

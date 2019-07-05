@@ -19,7 +19,7 @@
 | config | 表格配置项，需要提供`columns`列表配置以及`load`加载数据方法 | Object | start/end/center/space-around/space-between | - |
 | paramsFormatter | 分页参数转化 | Object | - | {'page':'page','pageSize':'pageSize','activeName':'activeName'} |
 | responseFormatter | 获取异步数据的列表字段以及分页字段 | Function | - | 默认获取response.data or response.items作为list,response.total or response.totalNum作为总数|
-
+| pageConfig | 设置分页 | Object | — | {layout:''total, sizes, prev, pager, next, jumper''} |
 
 ### 方法
 
@@ -36,7 +36,7 @@
 <template>
     <div class="content">
         <sg-table-filter :config="filterConfig" v-model="formData" @submit="search" style="margin-bottom: 15px;"></sg-table-filter>
-        <sg-table-view :config="tableConfig" :tabs="tabs" ref="sgTableView" :params-formatter="{'activeName':'key'}" :tools="tools">
+        <sg-table-view :config="tableConfig" :tabs="tabs" ref="sgTableView" :params-formatter="{'activeName':'key'}" :tools="tools" :page-config="pageConfig">
         
             <sg-export-button slot="tools" api="/article/export" type="warning">批量导出</sg-export-button>
            
@@ -76,6 +76,9 @@
         },
         data() {
             return {
+                pageConfig:{
+                    layout:'prev, pager, next'
+                },
                 formData: {
                     code: '',
                     status:'',
