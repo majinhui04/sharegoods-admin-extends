@@ -18,7 +18,7 @@
             <el-tab-pane :label="tab.label" :name="tab.name" v-for="(tab,index) in tabs" :key="index"></el-tab-pane>
         </el-tabs>
         <el-table class="sg-table" v-loading="listLoading" :data="dataSource" border fit highlight-current-row
-                  style="width: 100%;" @selection-change="handleSelectionChange">
+                  style="width: 100%;" @selection-change="handleSelectionChange" :height="height" ref="table">
             <template v-for="(col,index) in columns">
                 <el-table-column v-if="col.type ==='selection'" :key="index" type="selection" :width="col.width"
                                  align="center"></el-table-column>
@@ -47,7 +47,8 @@
         </el-table>
         <div class style="height: 14px;" v-if="paginationFixed"></div>
         <pagination v-show="total>0" :total="total" :page.sync="pagination.page" :limit.sync="pagination.pageSize"
-                    @pagination="fetchList" :class="{'fixed':paginationFixed}" class="right sg-pagination" :layout="pageConfig.layout"/>
+                    @pagination="fetchList" :class="{'fixed':paginationFixed}" class="right sg-pagination"
+                    :layout="pageConfig.layout"/>
     </div>
 </template>
 
@@ -97,6 +98,10 @@
                 default() {
                     return {};
                 }
+            },
+            height: {
+                type: [Number, String],
+                default: null
             },
             responseFormatter: {
                 type: Function,
@@ -172,10 +177,12 @@
                     this.dataSource = result.list;
                     this.total = result.total;
                     this.listLoading = false;
+                    this.$refs.table.bodyWrapper.scrollTop = 0;
                 }).catch(() => {
                     this.dataSource = [];
                     this.total = 0;
                     this.listLoading = false;
+                    this.$refs.table.bodyWrapper.scrollTop = 0;
                 });
             }
         }

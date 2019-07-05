@@ -14,6 +14,7 @@
 
 | 参数      | 说明          | 类型      | 可选值                           | 默认值  |
 |---------- |-------------- |---------- |--------------------------------  |-------- |
+| height | 设置表格高度 | [Number,String] | — | — |
 | tools | 表格操作按钮列表 | Array | — | - |
 | tabs | 表单搜索状态列表 | Array | — | — |
 | config | 表格配置项，需要提供`columns`列表配置以及`load`加载数据方法 | Object | start/end/center/space-around/space-between | - |
@@ -36,7 +37,10 @@
 <template>
     <div class="content">
         <sg-table-filter :config="filterConfig" v-model="formData" @submit="search" style="margin-bottom: 15px;"></sg-table-filter>
-        <sg-table-view :config="tableConfig" :tabs="tabs" ref="sgTableView" :params-formatter="{'activeName':'key'}" :tools="tools" :page-config="pageConfig">
+        <sg-table-view 
+            :height="300"
+            :responseFormatter="responseFormatter"
+            :config="tableConfig" :tabs="tabs" ref="sgTableView" :params-formatter="{'activeName':'key'}" :tools="tools" :page-config="pageConfig" >
         
             <sg-export-button slot="tools" api="/article/export" type="warning">批量导出</sg-export-button>
            
