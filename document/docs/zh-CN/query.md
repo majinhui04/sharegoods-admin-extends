@@ -162,6 +162,8 @@
                             type: 'success',
                             duration: 2000
                         });
+                        // 返回当前页数据
+                        this.$refs['sgTableView'].fetchList({});
                     }
                 },
                     {
