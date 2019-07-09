@@ -10,6 +10,10 @@
                 {
                     "path": "/quick-start",
                     "name": "快速开发"
+                },
+                {
+                    "path": "/vue-admin",
+                    "name": "Vue后台管理通用解决方案"
                 }
             ]
         },

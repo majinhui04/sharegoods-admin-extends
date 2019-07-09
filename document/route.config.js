@@ -40,6 +40,16 @@ let route = [
                 component: resolve => require(['./docs/zh-CN/quick-start.md'], resolve)
             },
             {
+                path: 'vue-admin',
+                meta: {
+                    title: 'vue-admin',
+                    description: 'vue-admin',
+                    lang
+                },
+                name: 'component-vue-admin',
+                component: resolve => require(['./docs/share/vue-admin.md'], resolve)
+            },
+            {
                 path: 'capital',
                 meta: {
                     title: 'capital',
