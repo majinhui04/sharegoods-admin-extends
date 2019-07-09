@@ -117,7 +117,7 @@ let route = [
                     description: 'npm',
                     lang
                 },
-                name: 'share-npm',
+                name: 'component-npm',
                 component: resolve => require(['./docs/share/npm.md'], resolve)
             }
         ]
