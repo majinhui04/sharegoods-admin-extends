@@ -14,6 +14,7 @@
 
 | 参数      | 说明          | 类型      | 可选值                           | 默认值  |
 |---------- |-------------- |---------- |--------------------------------  |-------- |
+| handleSelectAble | 用来决定当前行的CheckBox 是否可以勾选 | Function(row,index) | — | — |
 | height | 设置表格高度 | [Number,String] | — | — |
 | tools | 表格操作按钮列表 | Array | — | - |
 | tabs | 表单搜索状态列表 | Array | — | — |
@@ -40,7 +41,7 @@
         <sg-table-view 
             :height="300"
             :responseFormatter="responseFormatter"
-            :config="tableConfig" :tabs="tabs" ref="sgTableView" :params-formatter="{'activeName':'key'}" :tools="tools" :page-config="pageConfig" >
+            :config="tableConfig" :tabs="tabs" ref="sgTableView" :params-formatter="{'activeName':'key'}" :tools="tools" :page-config="pageConfig" :handleSelectAble="handleSelectAble">
         
             <sg-export-button slot="tools" api="/article/export" type="warning">批量导出</sg-export-button>
            
@@ -243,6 +244,14 @@
             this.initArticleStatusList()
         },
         methods: {
+            handleSelectAble(row,index){
+                 if(index % 2==0){
+                        return true
+                    }else{
+                        return false
+                    }
+                console.log('rowwwwww',row)
+            },
             // 在列表初始化的时候就会执行一遍 所以需要中间函数处理
             handleExport(row){
                 const fn = function() {
