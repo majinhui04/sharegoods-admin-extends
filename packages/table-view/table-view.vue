@@ -21,7 +21,7 @@
                   style="width: 100%;" @selection-change="handleSelectionChange" :height="height" ref="table">
             <template v-for="(col,index) in columns">
                 <el-table-column v-if="col.type ==='selection'" :key="index" type="selection" :width="col.width"
-                                 align="center"></el-table-column>
+                                 align="center" :selectable="handleSelectAble"></el-table-column>
                 <template v-else-if="col.type==='slot'">
                     <slot :name="col.name || col.prop"></slot>
                 </template>
@@ -113,6 +113,12 @@
                         list,
                         total
                     };
+                }
+            },
+            handleSelectAble:{
+                type:Function,
+                default(){
+                    return true
                 }
             }
         },
