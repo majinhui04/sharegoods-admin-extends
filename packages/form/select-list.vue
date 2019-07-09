@@ -16,7 +16,7 @@
 
     export default {
         name: 'SelectList',
-        props: ['multi', 'options', 'name', 'label', 'value','label-width'],
+        props: ['multi', 'options', 'name', 'label', 'value', 'label-width'],
         mixins: [formMixins],
         data() {
             return {

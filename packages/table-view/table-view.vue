@@ -115,10 +115,10 @@
                     };
                 }
             },
-            handleSelectAble:{
-                type:Function,
-                default(){
-                    return true
+            handleSelectAble: {
+                type: Function,
+                default() {
+                    return true;
                 }
             }
         },
