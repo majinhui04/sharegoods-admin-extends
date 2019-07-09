@@ -109,6 +109,16 @@ let route = [
                 },
                 name: 'share-git',
                 component: resolve => require(['./docs/share/todo.md'], resolve)
+            },
+            {
+                path: 'npm',
+                meta: {
+                    title: 'npm',
+                    description: 'npm',
+                    lang
+                },
+                name: 'share-npm',
+                component: resolve => require(['./docs/share/npm.md'], resolve)
             }
         ]
     }
