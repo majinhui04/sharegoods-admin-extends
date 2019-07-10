@@ -119,7 +119,7 @@ class Request {
             url: url,
             method: method,
             timeout: 20000,
-            responseType: 'blob'
+            responseType: 'arraybuffer' // blob
         };
 
         if (params) {
@@ -131,27 +131,31 @@ class Request {
         }
 
         return this.httpClient.request(config).then(response => {
-            let filename = response.headers['x-suggested-filename'];
+            if(response.headers) {
+                let filename = response.headers['x-suggested-filename'];
 
-            if (!filename) {
-                const filenameRegex = /filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/;
-                const matches = filenameRegex.exec(response.headers['content-disposition']);
-                if (matches != null && matches[1]) {
-                    filename = matches[1].replace(/['"]/g, '');
+                if (!filename) {
+                    const filenameRegex = /filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/;
+                    const matches = filenameRegex.exec(response.headers['content-disposition']);
+                    if (matches != null && matches[1]) {
+                        filename = matches[1].replace(/['"]/g, '');
+                    }
                 }
-            }
 
-            if (filename) {
-                const url = window.URL.createObjectURL(new Blob([response.data]));
-                const link = document.createElement('a');
-                link.href = url;
-                link.setAttribute('download', decodeURIComponent(filename));
-                link.click();
-                window.URL.revokeObjectURL(url);
+                if (filename) {
+                    const url = window.URL.createObjectURL(new Blob([response.data]));
+                    const link = document.createElement('a');
+                    link.href = url;
+                    link.setAttribute('download', decodeURIComponent(filename));
+                    link.click();
+                    window.URL.revokeObjectURL(url);
 
-                return true;
+                    return { code: 0 };
+                } else {
+                    return { code: -1, message: '下载文件失败' };
+                }
             } else {
-                return false;
+                return response;
             }
         });
     }

@@ -18,6 +18,10 @@
     export default {
         name: 'SgExportButton',
         props: {
+            isShowError: {
+                type: Boolean,
+                default: true
+            },
             api: {
                 type: String,
                 default: ''
@@ -75,34 +79,22 @@
                 const params = method === 'POST' ? null : form;
                 const formData = method === 'POST' ? form : null;
                 this.loading = true;
-                if (this.fileType === 'blob') {
-                    const { data } = await flatry(this.$http.download(method, this.api, params, formData));
+                this.$http.download(method, this.api, params, formData).then(res => {
                     this.loading = false;
-                    if (data === false) {
-                        this.$message({
-                            type: 'warning',
-                            message: '下载文件失败',
-                            duration: 1500
-                        });
-                        this.$emit('fail');
-                    } else {
-                        this.$emit('success');
+                    this.$emit('success');
+                    if (res.data) {
+                        downloadFile(res.data);
                     }
-                } else {
-                    const { data } = await flatry(this.$http.request(method, this.api, params, formData));
+                }).catch(res => {
+                    const message = res.msg || res.message;
                     this.loading = false;
-                    if (!data.data) {
-                        this.$message({
-                            type: 'warning',
-                            message: '下载文件失败',
-                            duration: 1500
-                        });
-                        this.$emit('fail');
-                    } else {
-                        downloadFile(data.data);
-                        this.$emit('success');
-                    }
-                }
+                    this.$emit('fail', res);
+                    this.isShowError && this.$message({
+                        type: 'warning',
+                        message: message || '下载文件失败',
+                        duration: 1500
+                    });
+                });
             }
         }
     };

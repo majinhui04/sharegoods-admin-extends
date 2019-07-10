@@ -101,6 +101,25 @@ const HttpClient = {
                 if (response.config.responseType === 'blob') {
                     return Promise.resolve(response);
                 }
+                if (response.config.responseType === 'arraybuffer') {
+                    const isJSON = response.headers['content-type'].indexOf('application/json') > -1;
+                    if (isJSON) {
+                        try {
+                            const result = JSON.parse(Buffer.from(response.data).toString('utf8'));
+                            if (opt.getResponseSuccess(result)) {
+                                return Promise.resolve(result);
+                            } else {
+                                result.code = -1;
+                                result.message = result.msg || result.message;
+                                return Promise.reject(result);
+                            }
+                        } catch (e) {
+                            return Promise.reject(e);
+                        }
+                    } else {
+                        return Promise.resolve(response);
+                    }
+                }
                 if (opt.getResponseSuccess(response.data)) {
                     return Promise.resolve(response.data);
                 } else {
