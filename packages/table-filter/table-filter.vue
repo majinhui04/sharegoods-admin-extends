@@ -26,7 +26,7 @@
             </template>
             <slot name="buttons">
                 <div class="actions">
-                    <el-button type="primary" @click="submit" size="small">{{onSubmitText}}</el-button>
+                    <el-button type="primary" @click="submit" native-type="submit" size="small">{{onSubmitText}}</el-button>
                     <el-button type="default" @click="reset" size="small">{{onResetText}}</el-button>
                 </div>
             </slot>
@@ -65,12 +65,6 @@
             };
         },
         created(){
-            document.onkeydown = (e) => {
-                let key = window.event.keyCode;
-                if(key === '13'){
-                   this.$emit('submit');
-                }
-            }
         },
         methods: {
             updateForm(fieldName, value) {
