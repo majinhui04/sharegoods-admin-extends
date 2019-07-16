@@ -38,6 +38,7 @@
 <template>
     <div class="content">
         <sg-table-filter :config="filterConfig" v-model="formData" @submit="search" style="margin-bottom: 15px;"></sg-table-filter>
+        <sg-table-filter :config="filterConfig1" v-model="formData1" @submit="search1" style="margin-bottom: 15px;"></sg-table-filter>
         <sg-table-view 
             :height="300"
             :responseFormatter="responseFormatter"
@@ -148,6 +149,19 @@
                                 "value":""
                             }],
                             cols: 12
+                        }
+                    ]
+                },
+                formData1: {
+                    code1: '',
+                },
+                filterConfig1: {
+                    fields: [
+                        {
+                            name: 'code1',
+                            label: '会员号1',
+                            fieldType: 'TextInput',
+                            cols: 8
                         }
                     ]
                 },
@@ -296,6 +310,10 @@
             },
             search() {
                 console.log('getFormData', this.formData);
+                this.$refs['sgTableView'].fetchList({ page: 1 });
+            },
+            search1() {
+                console.log('当前表单提交')
                 this.$refs['sgTableView'].fetchList({ page: 1 });
             }
             
