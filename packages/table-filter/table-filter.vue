@@ -4,7 +4,9 @@
                  ref="form"
                  :model="formData"
                  class="sg-filter-form"
-                 :label-width="labelWidth">
+                 :label-width="labelWidth"
+                 @submit.native.prevent
+                 >
             <template :span="field.cols" v-for="(field, index) in config.fields">
                 <component
                     class="sg-form-item"
@@ -24,7 +26,7 @@
             </template>
             <slot name="buttons">
                 <div class="actions">
-                    <el-button type="primary" @click="submit" size="small">{{onSubmitText}}</el-button>
+                    <el-button type="primary" @click="submit" native-type="submit" size="small">{{onSubmitText}}</el-button>
                     <el-button type="default" @click="reset" size="small">{{onResetText}}</el-button>
                 </div>
             </slot>
@@ -61,6 +63,8 @@
                 onSubmitText: this.config.onSubmitText || '查询',
                 onResetText: this.config.onResetText || '重置'
             };
+        },
+        created(){
         },
         methods: {
             updateForm(fieldName, value) {
