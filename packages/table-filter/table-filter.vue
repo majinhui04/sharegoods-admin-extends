@@ -4,7 +4,9 @@
                  ref="form"
                  :model="formData"
                  class="sg-filter-form"
-                 :label-width="labelWidth">
+                 :label-width="labelWidth"
+                 @submit.native.prevent
+                 >
             <template :span="field.cols" v-for="(field, index) in config.fields">
                 <component
                     class="sg-form-item"
@@ -61,6 +63,14 @@
                 onSubmitText: this.config.onSubmitText || '查询',
                 onResetText: this.config.onResetText || '重置'
             };
+        },
+        created(){
+            document.onkeydown = (e) => {
+                let key = window.event.keyCode;
+                if(key === '13'){
+                   this.$emit('submit');
+                }
+            }
         },
         methods: {
             updateForm(fieldName, value) {
