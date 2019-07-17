@@ -8,7 +8,7 @@
                 </template>
                 <template v-else>
                     <el-button :type="item.type || 'primary'" :key="i"
-                               @click="item.onClick">{{item.label}}
+                               @click="item.onClick" v-if='!item.hidden'>{{item.label}}
                     </el-button>
                 </template>
             </template>
