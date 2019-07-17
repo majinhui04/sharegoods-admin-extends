@@ -8,8 +8,11 @@
                  @submit.native.prevent
                  >
             <template :span="field.cols" v-for="(field, index) in config.fields">
+                <slot v-if="field.type === 'slot'" :name="field.name"></slot>
                 <component
+                    v-else
                     class="sg-form-item"
+                    :clearable="field.clearable"
                     :key="index"
                     :type="field.type"
                     :format="field.format"
