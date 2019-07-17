@@ -67,7 +67,8 @@
                 type: Object,
                 default() {
                     return {
-                        layout: 'total, sizes, prev, pager, next, jumper'
+                        layout: 'total, sizes, prev, pager, next, jumper',
+                        pageSize: 10
                     };
                 }
             },
@@ -127,7 +128,7 @@
                 activeName: '',
                 pagination: {
                     page: 1,
-                    pageSize: 10
+                    pageSize: this.pageConfig.pageSize || 10
                 },
                 total: 0,
                 listLoading: false,

@@ -83,7 +83,8 @@
         data() {
             return {
                 pageConfig:{
-                    layout:'prev, pager, next'
+                    layout:'prev, pager, next',
+                    pageSize: 40
                 },
                 formData: {
                     code: '',
