@@ -134,7 +134,7 @@ export default [
         response: _ => {
             sleep(0.5 * 1000);
             return {
-                code: 0,
+                code: 20,
                 message: '好点不对啊',
                 data: '/static/test.xlsx'
             };
