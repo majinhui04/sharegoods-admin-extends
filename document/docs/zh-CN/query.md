@@ -186,6 +186,7 @@
                     ]
                 },
                 tools: [{
+                    hidden: true, // 如果要设置隐藏
                     label: '批量删除',
                     type:'danger',
                     onClick: () => {
