@@ -217,6 +217,11 @@
                             type: 'selection'
                         },
                         {
+                            width: 55,
+                            type: 'index',
+                            label:'序号'
+                        },
+                        {
                             type: 'slot',
                             prop: 'download'
                         },

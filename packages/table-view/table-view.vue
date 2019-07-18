@@ -22,6 +22,8 @@
             <template v-for="(col,index) in columns">
                 <el-table-column v-if="col.type ==='selection'" :key="index" type="selection" :width="col.width"
                                  align="center" :selectable="handleSelectAble"></el-table-column>
+                <el-table-column v-else-if="col.type ==='index'" :key="index" type="index" :width="col.width"
+                                 align="center" :label="col.label"></el-table-column>
                 <template v-else-if="col.type==='slot'">
                     <slot :name="col.name || col.prop"></slot>
                 </template>
