@@ -67,7 +67,7 @@
                     legend: {
                         top: '95%',
                         left: 'center',
-                        data: ['交易笔数', '交易额(万)']
+                        data: ['交易笔数', '交易额(万)','交易额(万111)']
                     },
                     calculable: true,
                     xAxis: [
@@ -138,6 +138,29 @@
                             },
                             //itemStyle: { normal: { label: { show: false }, color: '#FE8463' } },
                             data: []
+                        },
+                         {
+                            name: '交易额(万111)',
+                            type: 'line',
+                            yAxisIndex: 1,
+                            smooth: true,
+                            markPoint: {
+                                itemStyle: {
+                                    normal: {
+                                        label: {
+                                            show: true,
+                                            color: '#FFFFFF'
+                                        }
+                                    }
+                                },
+                                symbol: 'pin',
+                                data: [
+                                    { type: 'max', name: '最大值' },
+                                    { type: 'min', name: '最小值' }
+                                ]
+                            },
+                            //itemStyle: { normal: { label: { show: false }, color: '#FE8463' } },
+                            data: []
                         }
                     ]
                 }
@@ -165,6 +188,15 @@
                         let i = 0;
                         while (result.length < 12) {
                             result[i] = rand(50000, 100000);
+                            i++;
+                        }
+                        return result;
+                    })();
+                    series[2].data = (function () {
+                        let result = [];
+                        let i = 0;
+                        while (result.length < 12) {
+                            result[i] = rand(5000, 10000);
                             i++;
                         }
                         return result;

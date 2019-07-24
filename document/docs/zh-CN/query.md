@@ -54,7 +54,7 @@
         <sg-table-view 
             :height="300"
             :responseFormatter="responseFormatter"
-            :config="tableConfig" :tabs="tabs" ref="sgTableView" :params-formatter="{'activeName':'key'}" :tools="tools" :page-config="pageConfig" :handleSelectAble="handleSelectAble">
+            :config="tableConfig" :tabs="tabs" ref="sgTableView" :params-formatter="{'activeName':'key'}" :tools="tools" :page-config="pageConfig" :handleSelectAble="handleSelectAble" @handleInputBlur="handleInputBlur" :isCellClick="isCellClick">
         
             <sg-export-button slot="tools" api="/article/export" type="warning">批量导出</sg-export-button>
            
@@ -94,6 +94,7 @@
         },
         data() {
             return {
+               isCellClick:true,
                restaurants:[],
                 pageConfig:{
                     layout:'prev, pager, next',
@@ -262,8 +263,9 @@
                             }
                         },
                         {
+                            type:'editTable',
                             label: '标题',
-                            prop: 'title'
+                            prop: 'title',
                         },
                         {
                             label: '作者',
@@ -288,6 +290,14 @@
             this.restaurants = this.loadAll();
         },
         methods: {
+            handleInputBlur(e){
+                const numregex = /^(?!0+(?:\.0+)?$)(?:[1-9]\d*|0)(?:\.\d{1,2})?$/;
+                if (!numregex.test(e.target.value)) {
+                    e.target.value = "";
+                    this.submitFlag = false;
+                    this.$message.error("请输入正整数或保留小数点后两位");
+                 }    
+            },
             querySearch(queryString, cb) {
                     var restaurants = this.restaurants;
                     var results = queryString ? restaurants.filter(this.createFilter(queryString)) : restaurants;
@@ -404,10 +414,10 @@
             },
             search() {
                 console.log('getFormData', this.formData);
+                console.log('tableDataaaaaa',this.$refs['sgTableView'].getTableDataChange())
                 this.$refs['sgTableView'].fetchList({ page: 1 });
             },
             search1() {
-                console.log('当前表单提交')
                 this.$refs['sgTableView'].fetchList({ page: 1 });
             }
             
