@@ -28,10 +28,10 @@
                 </component>
             </template>
             <slot name="buttons">
-                <div class="actions">
+                <el-form-item class="actions sg-form-item" label=" ">
                     <el-button type="primary" @click="submit" native-type="submit" size="small">{{onSubmitText}}</el-button>
                     <el-button type="default" @click="reset" size="small">{{onResetText}}</el-button>
-                </div>
+                </el-form-item>
             </slot>
         </el-form>
     </div>
