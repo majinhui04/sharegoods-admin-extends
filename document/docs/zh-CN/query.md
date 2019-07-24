@@ -54,7 +54,7 @@
         <sg-table-view 
             :height="300"
             :responseFormatter="responseFormatter"
-            :config="tableConfig" :tabs="tabs" ref="sgTableView" :params-formatter="{'activeName':'key'}" :tools="tools" :page-config="pageConfig" :handleSelectAble="handleSelectAble" @handleInputBlur="handleInputBlur" :isCellClick="isCellClick">
+            :config="tableConfig" :tabs="tabs" ref="sgTableView" :params-formatter="{'activeName':'key'}" :tools="tools" :page-config="pageConfig" :handleSelectAble="handleSelectAble" @handleInputBlur="handleInputBlur">
         
             <sg-export-button slot="tools" api="/article/export" type="warning">批量导出</sg-export-button>
            
@@ -94,7 +94,6 @@
         },
         data() {
             return {
-               isCellClick:true,
                restaurants:[],
                 pageConfig:{
                     layout:'prev, pager, next',
