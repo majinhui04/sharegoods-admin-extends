@@ -67,7 +67,7 @@
                     legend: {
                         top: '95%',
                         left: 'center',
-                        data: ['交易笔数', '交易额(万)',]
+                        data: ['交易笔数', '交易额(万)']
                     },
                     calculable: true,
                     xAxis: [
