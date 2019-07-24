@@ -138,8 +138,7 @@
                             },
                             //itemStyle: { normal: { label: { show: false }, color: '#FE8463' } },
                             data: []
-                        },
-                         
+                        }
                     ]
                 }
             };

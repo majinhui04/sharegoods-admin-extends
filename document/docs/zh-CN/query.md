@@ -264,7 +264,7 @@
                         {
                             type:'editTable',
                             label: '标题',
-                            prop: 'title',
+                            prop: 'title'
                         },
                         {
                             label: '作者',
@@ -274,8 +274,7 @@
                             width:150,
                             type: 'slot',
                             prop: 'actions'
-                        }
-                        
+                        } 
                     ],
                     load: (params) => {
                         const data = { ...params, ...this.formData,$timeout:10000 };
