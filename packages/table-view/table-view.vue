@@ -27,7 +27,7 @@
                 <template v-else-if="col.type==='slot'">
                     <slot :name="col.name || col.prop"></slot>
                 </template>
-                <el-table-column v-else-if="col.type==='editTable'" align="center" :label="col.label" :key="index" :width="col.width" class="sss">
+                <el-table-column v-else-if="col.type==='editTable'" align="center" :label="col.label" :key="index" :width="col.width" >
                     <template slot-scope="scope">
                        <el-input v-model="scope.row[col.prop]" v-if="col.curPageStatus!=='check'" @blur="handleInput($event)" ></el-input>
                        <span v-else>{{scope.row[col.prop]}}</span>
@@ -67,10 +67,6 @@
         name: 'SgTableView',
         components: { Pagination },
         props: {
-            isCellClick: {
-                type:Boolean,
-                default:false
-            },
             paginationFixed: {
                 type: Boolean,
                 default: false
