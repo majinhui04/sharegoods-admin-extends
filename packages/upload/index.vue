@@ -1,6 +1,7 @@
 <template>
     <el-upload
         class="sg-upload"
+        :action='api'
         :accept="accept"
         :headers="headers"
         :multiple="multiple"
@@ -11,15 +12,13 @@
         :disabled="disabled"
         :file-list="fileListData"
         :show-file-list="showFileList">
-        <el-button :size="size" :type="type">
-            <slot>点击上传</slot>
-        </el-button>
+        <el-button :size="size" :type="type">{{btnMsg}}</el-button>
     </el-upload>
 </template>
 
 <script>
     export default {
-        name: 'UploadFile',
+        name: 'SgUpload',
         props: {
             // 请求前缀
             baseUrl: {
@@ -55,7 +54,7 @@
             // 接受上传的文件类型
             accept: {
                 type: String,
-                default: ''
+                default: '.xls, .xlsx'
             },
             size: {
                 type: String,
@@ -64,6 +63,10 @@
             type: {
                 type: String,
                 default: 'primary'
+            },
+            btnMsg: {
+                type: String,
+                default: '点击上传'
             }
         },
         data() {
@@ -96,7 +99,14 @@
             handleBeforeUpload(file) {
                 this.disabled = true;
             },
+            // 上传文件失败
             handleError(err, file, fileList) {
+                this.disabled = true;
+                this.$emit('fail', {
+                    err,
+                    file,
+                    fileList
+                });
             }
 
         }

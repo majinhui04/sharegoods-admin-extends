@@ -99,6 +99,16 @@ let route = [
                 name: 'component-layout',
                 component: resolve => require(['./docs/zh-CN/layout.md'], resolve)
             },
+            {
+                path: 'upload',
+                meta: {
+                    title: 'upload',
+                    description: 'upload',
+                    lang
+                },
+                name: 'component-upload',
+                component: resolve => require(['./docs/zh-CN/upload.md'], resolve)
+            },
             // share
             {
                 path: 'git',

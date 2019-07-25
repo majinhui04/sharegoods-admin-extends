@@ -47,6 +47,10 @@
                         {
                             "path": "/layout",
                             "title": "Layout 布局"
+                        },
+                        {
+                            "path": "/upload",
+                            "title": "upload 上传"
                         }
                     ]
                 }
