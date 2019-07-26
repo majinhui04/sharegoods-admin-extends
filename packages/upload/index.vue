@@ -12,7 +12,7 @@
         :disabled="disabled"
         :file-list="fileListData"
         :show-file-list="showFileList">
-        <el-button :size="size" :type="type">{{btnMsg}}</el-button>
+        <el-button :size="size" :type="type"><slot name="span"></slot></el-button>
     </el-upload>
 </template>
 

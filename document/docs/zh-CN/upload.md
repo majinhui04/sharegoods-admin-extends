@@ -24,10 +24,10 @@
     <div class="content">
         <sg-upload
             api="/goods/import" :headers="header"
-            btnMsg="导入商品"
+            slot="导入商品"
             @success='handleSuccess'
             @fail='handleFail'
-            :accept="accept"></sg-upload>
+            :accept="accept"><span slot="span">biqotttt</span></sg-upload>
     </div>
 </template>
 <script>
