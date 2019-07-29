@@ -133,8 +133,10 @@
                 $chart.style.width = parentWidth + 'px';
             },
             resizeChart() {
-                this.setSize();
-                this.myChart.resize();
+                if(this.myChart){
+                    this.setSize();
+                    this.myChart.resize();
+                }
             },
             drawChart() {
                 let options = Object.assign({}, this.config, this.option, { color });
