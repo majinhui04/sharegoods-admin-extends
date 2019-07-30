@@ -133,7 +133,7 @@
                 $chart.style.width = parentWidth + 'px';
             },
             resizeChart() {
-                if(this.myChart){
+                if(this.myChart) {
                     this.setSize();
                     this.myChart.resize();
                 }
