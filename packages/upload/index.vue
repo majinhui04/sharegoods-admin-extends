@@ -12,7 +12,7 @@
         :disabled="disabled"
         :file-list="fileListData"
         :show-file-list="showFileList">
-        <el-button :size="size" :type="type"><slot name="span"></slot></el-button>
+        <el-button :size="size" :type="type" :element-loading-text="loadingText" v-loading.fullscreen.lock="loading" element-loading-spinner="el-icon-loading"><slot name='msg'>上传文件</slot></el-button>
     </el-upload>
 </template>
 
@@ -20,6 +20,10 @@
     export default {
         name: 'SgUpload',
         props: {
+            tips: {
+                type: String,
+                default: '正在上传数据'
+            },
             // 请求前缀
             baseUrl: {
                 type: String,
@@ -64,14 +68,19 @@
                 type: String,
                 default: 'primary'
             },
-            btnMsg: {
-                type: String,
-                default: '点击上传'
+            isShowError: {
+                type: Boolean,
+                default: true
+            },
+            loading: {
+                type: Boolean,
+                default: true
             }
         },
         data() {
             return {
-                disabled: false
+                disabled: false,
+                loadingText: this.tips
             };
         },
         computed: {
@@ -88,6 +97,7 @@
                     file,
                     fileList
                 });
+                 this.loading = false;
             },
             handleRemove(file, fileList) {
                 this.$emit('remove', {
@@ -97,18 +107,22 @@
             },
             // 上传文件之前的钩子
             handleBeforeUpload(file) {
+                console.log('1111')
                 this.disabled = true;
+                this.loading = true;
             },
             // 上传文件失败
             handleError(err, file, fileList) {
-                this.disabled = true;
-                this.$emit('fail', {
-                    err,
-                    file,
-                    fileList
+                this.loading = false;
+                this.disabled = false;
+                this.$emit('fail', {err, file, fileList})
+                const message = err.msg || err.message;
+                this.isShowError && this.$message({
+                    type: 'warning',
+                    message: message || '上传文件失败',
+                    duration: 1500
                 });
             }
-
         }
     };
 </script>

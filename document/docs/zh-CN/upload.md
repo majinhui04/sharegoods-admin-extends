@@ -24,10 +24,11 @@
     <div class="content">
         <sg-upload
             api="/goods/import" :headers="header"
-            slot="导入商品"
             @success='handleSuccess'
             @fail='handleFail'
-            :accept="accept"><span slot="span">biqotttt</span></sg-upload>
+            tips="正在上传数据,请稍后"
+            loading='true'
+            :accept="accept"><span slot="msg">导入文件<i class="el-icon-upload el-icon--right"></i></span></sg-upload>
     </div>
 </template>
 <script>
@@ -48,12 +49,7 @@
                 });
             },
             handleFail(value){
-                const data = value;
-                this.$message({
-                    message: data.err.message,
-                    type: 'error',
-                    duration: 2000
-                });
+                
             }
         }
     }
