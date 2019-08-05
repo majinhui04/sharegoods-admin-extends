@@ -101,8 +101,11 @@ const HttpClient = {
                 if (response.config.responseType === 'blob') {
                     return Promise.resolve(response);
                 }
+                // 数据结果根据`content-type`来操作json数据以及文件流
                 if (response.config.responseType === 'arraybuffer') {
-                    const isJSON = response.headers['content-type'].indexOf('application/json') > -1;
+                    const headers = response.headers || {};
+                    const contentType = headers['content-type'] || '';
+                    const isJSON = contentType.indexOf('application/json') > -1;
                     if (isJSON) {
                         try {
                             const result = JSON.parse(Buffer.from(response.data).toString('utf8'));

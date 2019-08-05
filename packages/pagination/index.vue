@@ -81,13 +81,13 @@
             }
         },
         mounted() {
-            const dom = this.$refs['sgPage'];
-            if (dom) {
-                const $parent = dom.parentNode;
-                const rect = $parent.getBoundingClientRect();
-                const width = rect.width;
-                this.style = `width:${width}px;`;
-            }
+            // const dom = this.$refs['sgPage'];
+            // if (dom) {
+            //     const $parent = dom.parentNode;
+            //     const rect = $parent.getBoundingClientRect();
+            //     const width = rect.width;
+            //     this.style = `width:${width}px;`;
+            // }
         },
         methods: {
             handleSizeChange(val) {
