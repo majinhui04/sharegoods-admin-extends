@@ -137,6 +137,7 @@
                             name: 'payType',
                             label: '支付方式',
                             fieldType: 'SelectList',
+                            filterable: 'filterable',
                             options: [{
                                 "label":"请选择",
                                 "value":""

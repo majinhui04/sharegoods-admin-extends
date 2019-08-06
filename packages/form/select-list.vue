@@ -42,6 +42,10 @@
                 type: Boolean,
                 default: false
             },
+            filterable: {
+                type: Boolean,
+                default: false
+            },
             options: {
                 type: Array,
                 default() {
