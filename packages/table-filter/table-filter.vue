@@ -21,6 +21,7 @@
                     :is="field.fieldType" :label="field.label"
                     :value="formData[field.name]"
                     :multiple="field.multiple"
+                    :filterable="field.filterable"
                     @input="updateForm"
                     v-bind="field"
                     :options="field.options"
