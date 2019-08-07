@@ -48,6 +48,18 @@ export default {
         className: {
             type: String,
             default: ''
+        },
+        limit: {
+            type: Number,
+            default: 10
+        },
+        createStateFilter: {
+            type: Function,
+            default(queryString) {
+                return val => {
+                    return val.value.toLowerCase().indexOf(queryString.toLowerCase()) > -1;
+                };
+            }
         }
     },
     mixins: [formMixins],
@@ -60,22 +72,20 @@ export default {
     },
     methods: {
         async searchResult(queryString, cb) {
-            this.resultList = await this.options;
-            this.querySearchAsync(queryString, cb);
+            try {
+                this.resultList = await this.options;
+                this.querySearchAsync(queryString, cb);
+            } catch (err) {
+                console.error(err);
+            }
         },
         querySearchAsync(queryString, cb) {
-            const searchResult = this.resultList;
-            let results = queryString ? searchResult.filter(this.createStateFilter(queryString)) : searchResult;
+            let searchResult = this.resultList;
+            let results = queryString ? searchResult.filter(this.createStateFilter(queryString)) : searchResult.slice(0, this.limit);
             clearTimeout(this.timeout);
             this.timeout = setTimeout(() => {
                 cb(results);
             }, 1000 * Math.random());
-        },
-        createStateFilter(queryString) {
-            let val = this.value;
-            return val => {
-                return val.value.toLowerCase().indexOf(queryString.toLowerCase()) > -1;
-            };
         }
     }
 };

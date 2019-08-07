@@ -25,6 +25,7 @@
 | options             | 模糊匹配的数据源（一定要有value字段）  | Promise               | —        | —    |
 | triggerOnFocus         | 是否在输入框focus时获得建议列表  | Boolean              | -       | true   |
 | className         | 自动补全的下拉列表类名  | String              | -       | —    |
+| limit         | 初始化时下拉列表的数据长度  | Number              | -       | 10   |
 ### 方法
 
 | 方法名     | 说明              |
@@ -187,6 +188,7 @@
                             fieldType: 'AutoComplete',
                             options:this.getResultMethod(),
                             className: 'my-autocomplete',
+                            createStateFilter:this.filterData
                         }
                     ]
                 },
@@ -305,6 +307,11 @@
             this.restaurants = this.loadAll();
         },
         methods: {
+            filterData(queryString){
+                return val => {
+                    return (val.value.indexOf(queryString) > -1 || val.address.indexOf(queryString) > -1);
+                };
+            },
             getResultMethod(){
                 return this.$api.restaurantList().then(res => {
                         let result = []
