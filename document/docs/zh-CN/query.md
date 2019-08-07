@@ -26,6 +26,7 @@
 | triggerOnFocus         | 是否在输入框focus时获得建议列表  | Boolean              | -       | true   |
 | className         | 自动补全的下拉列表类名  | String              | -       | —    |
 | limit         | 初始化时下拉列表的数据长度  | Number              | -       | 10   |
+| createStateFilter         | 自定义过滤字段的方法  | Function              | -       | -  |
 ### 方法
 
 | 方法名     | 说明              |
