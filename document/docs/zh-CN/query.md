@@ -4,31 +4,39 @@
 
 ### Attributes
 
-| 参数      | 说明          | 类型      | 可选值                           | 默认值  |
-|---------- |-------------- |---------- |--------------------------------  |-------- |
-| config | `fields`中的对象为各个表单域, `fieldType`包含这几种类型`TimeSelector`、`TextInput`、`TimeSelector`属性请参考[element](https://element.eleme.io/2.8/#/zh-CN/component/date-picker)| Array | — | - |
+| 参数   | 说明                                                                                                                                                                              | 类型  | 可选值 | 默认值 |
+| ------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----- | ------ | ------ |
+| config | `fields`中的对象为各个表单域, `fieldType`包含这几种类型`TimeSelector`、`TextInput`、`TimeSelector`属性请参考[element](https://element.eleme.io/2.8/#/zh-CN/component/date-picker) | Array | —      | -      |
 
 `table-view`组件：表格视图
 
 ### Attributes
 
-| 参数      | 说明          | 类型      | 可选值                           | 默认值  |
-|---------- |-------------- |---------- |--------------------------------  |-------- |
-| handleSelectAble | 用来决定当前行的CheckBox 是否可以勾选 | Function(row,index) | — | — |
-| height | 设置表格高度 | [Number,String] | — | — |
-| tools | 表格操作按钮列表 | Array | — | - |
-| tabs | 表单搜索状态列表 | Array | — | — |
-| config | 表格配置项，需要提供`columns`列表配置以及`load`加载数据方法 | Object | start/end/center/space-around/space-between | - |
-| paramsFormatter | 分页参数转化 | Object | - | {'page':'page','pageSize':'pageSize','activeName':'activeName'} |
-| responseFormatter | 获取异步数据的列表字段以及分页字段 | Function | - | 默认获取response.data or response.items作为list,response.total or response.totalNum作为总数|
-| pageConfig | 设置分页 | Object | — | {layout:''total, sizes, prev, pager, next, jumper''} |
-
+| 参数              | 说明                                                        | 类型                | 可选值                                      | 默认值                                                                                      |
+| ----------------- | ----------------------------------------------------------- | ------------------- | ------------------------------------------- | ------------------------------------------------------------------------------------------- |
+| handleSelectAble  | 用来决定当前行的CheckBox 是否可以勾选                       | Function(row,index) | —                                           | —                                                                                           |
+| height            | 设置表格高度                                                | [Number,String]     | —                                           | —                                                                                           |
+| tools             | 表格操作按钮列表                                            | Array               | —                                           | -                                                                                           |
+| tabs              | 表单搜索状态列表  | Array               | —        | —    |
+| config            | 表格配置项，需要提供`columns`列表配置以及`load`加载数据方法 | Object              | start/end/center/space-around/space-between | -                                                                                           |
+| paramsFormatter   | 分页参数转化                                                | Object              | -                                           | {'page':'page','pageSize':'pageSize','activeName':'activeName'}                             |
+| responseFormatter | 获取异步数据的列表字段以及分页字段                          | Function            | -                                           | 默认获取response.data or response.items作为list,response.total or response.totalNum作为总数 |
+| pageConfig        | 设置分页                                                    | Object              | —                                           | {layout:''total, sizes, prev, pager, next, jumper''}                                        |
+| options             | 模糊匹配的数据源（一定要有value字段）  | Promise               | —        | —    |
+| triggerOnFocus         | 是否在输入框focus时获得建议列表  | Boolean              | -       | true   |
+| className         | 自动补全的下拉列表类名  | String              | -       | —    |
+| limit         | 初始化时下拉列表的数据长度  | Number              | -       | 10   |
+| createStateFilter         | 自定义过滤字段的方法  | Function              | -       | -  |
 ### 方法
 
-| 方法名     | 说明          |
-| ---- | ---- |
+| 方法名     | 说明              |
+| ---------- | ----------------- |
 | getChecked | 返回数据列表Array |
+### 备注
 
+| 组件     | 说明              |
+| ---------- | ----------------- |
+| 自动补全组件 | 如果想使用自定义输入建议模版，请参考例子中的写法 |
 
 ### 使用案例
 
@@ -49,7 +57,11 @@
                       @select="handleSelect"
                     ></el-autocomplete>
             </el-form-item>
-
+           <div slot="restaurant" slot-scope="{data}">             
+                <div class="name">{{ data.value }}</div>
+                <div class="addr">{{ data.address }}</div> 
+           </div>
+            
         </sg-table-filter>
         <sg-table-view 
             :height="300"
@@ -102,6 +114,7 @@
                 formData: {
                    code2:'',
                     code3:'11',
+                    restaurant:'',
                     code: '',
                     status:'',
                     date: [new Date(+new Date()-30*24*60*60*1000),new Date()]
@@ -170,8 +183,15 @@
                             label: '商户号',
                             fieldType: 'TextInput',
                             cols: 8
+                        },
+                        {
+                            name: 'restaurant',
+                            label: '餐馆',
+                            fieldType: 'AutoComplete',
+                            options:this.getResultMethod(),
+                            className: 'my-autocomplete',
+                            createStateFilter:this.filterData
                         }
-                  
                     ]
                 },
                 formData1: {
@@ -289,6 +309,20 @@
             this.restaurants = this.loadAll();
         },
         methods: {
+            filterData(queryString){
+                return val => {
+                    return (val.value.indexOf(queryString) > -1 || val.address.indexOf(queryString) > -1);
+                };
+            },
+            getResultMethod(){
+                return this.$api.restaurantList().then(res => {
+                        let result = []
+                        res.data.forEach(item => {
+                            result.push({value:item.name,address:item.area})
+                        })
+                        return result
+                })
+            },
             handleInputBlur(e){
                 const numregex = /^(?!0+(?:\.0+)?$)(?:[1-9]\d*|0)(?:\.\d{1,2})?$/;
                 if (!numregex.test(e.target.value)) {
@@ -423,5 +457,6 @@
         }
     };
 </script>
+
 ```
 :::
