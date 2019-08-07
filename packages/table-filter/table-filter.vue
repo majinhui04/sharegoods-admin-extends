@@ -25,6 +25,9 @@
                     v-bind="field"
                     :options="field.options"
                     :ref="field.name">
+                    <template slot-scope="{data}">
+                        <slot :name="field.name" :data="data"></slot>
+                    </template>
                 </component>
             </template>
             <slot name="buttons">
@@ -41,10 +44,10 @@
     import SelectList from '../form/select-list';
     import TextInput from '../form/text-input';
     import TimeSelector from '../form/time-selector';
-
+    import AutoComplete from '../form/auto-complete';
     export default {
         name: 'SgTableFilter',
-        components: { SelectList, TextInput, TimeSelector },
+        components: { SelectList, TextInput, TimeSelector, AutoComplete },
         props: {
             config: {
                 type: Object,
