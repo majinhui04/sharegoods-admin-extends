@@ -15,6 +15,10 @@
         .el-select {
             width: 100%;
         }
+        &.actions {
+            clear: both;
+            display: block;
+        }
     }
 }
 

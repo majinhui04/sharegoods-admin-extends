@@ -26,13 +26,16 @@
                     v-bind="field"
                     :options="field.options"
                     :ref="field.name">
+                    <template slot-scope="{data}">
+                        <slot :name="field.name" :data="data"></slot>
+                    </template>
                 </component>
             </template>
             <slot name="buttons">
-                <div class="actions">
+                <el-form-item class="actions sg-form-item" label=" ">
                     <el-button type="primary" @click="submit" native-type="submit" size="small">{{onSubmitText}}</el-button>
                     <el-button type="default" @click="reset" size="small">{{onResetText}}</el-button>
-                </div>
+                </el-form-item>
             </slot>
         </el-form>
     </div>
@@ -42,10 +45,10 @@
     import SelectList from '../form/select-list';
     import TextInput from '../form/text-input';
     import TimeSelector from '../form/time-selector';
-
+    import AutoComplete from '../form/auto-complete';
     export default {
         name: 'SgTableFilter',
-        components: { SelectList, TextInput, TimeSelector },
+        components: { SelectList, TextInput, TimeSelector, AutoComplete },
         props: {
             config: {
                 type: Object,
