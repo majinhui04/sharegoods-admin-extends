@@ -23,16 +23,18 @@
 | responseFormatter | 获取异步数据的列表字段以及分页字段                          | Function            | -                                           | 默认获取response.data or response.items作为list,response.total or response.totalNum作为总数 |
 | pageConfig        | 设置分页                                                    | Object              | —                                           | {layout:''total, sizes, prev, pager, next, jumper''}                                        |
 | options             | 模糊匹配的数据源（一定要有value字段）  | Promise               | —        | —    |
-| triggerFlag         | 是否在输入框focus时获得建议列表  | Boolean              | -       | true   |
+| triggerOnFocus         | 是否在输入框focus时获得建议列表  | Boolean              | -       | true   |
 | className         | 自动补全的下拉列表类名  | String              | -       | —    |
-| isCustom         | 是否开启自定义输入模版  | Boolean              | -       | false    |
-
 ### 方法
 
 | 方法名     | 说明              |
 | ---------- | ----------------- |
 | getChecked | 返回数据列表Array |
+### 备注
 
+| 组件     | 说明              |
+| ---------- | ----------------- |
+| 自动补全组件 | 如果想使用自定义输入建议模版，请参考例子中的写法 |
 
 ### 使用案例
 
@@ -43,7 +45,7 @@
     <div class="content">
         <sg-table-filter :config="filterConfig" v-model="formData" @submit="search" style="margin-bottom: 15px;">
            
-            <el-form-item label="地址1111" slot="autocomplete" class="sg-form-item">
+            <el-form-item label="地址" slot="autocomplete" class="sg-form-item">
                 <el-autocomplete
                       class="inline-input"
                       v-model="formData.address"
@@ -185,10 +187,7 @@
                             fieldType: 'AutoComplete',
                             options:this.getResultMethod(),
                             className: 'my-autocomplete',
-                            isCustom:true
                         }
-
-                  
                     ]
                 },
                 formData1: {
@@ -449,27 +448,6 @@
         }
     };
 </script>
-<style >
-    body{
-        background:red !important;
-    }
-    .my-test {
-        background:red;
-        li {
-            line-height: normal;
-            padding: 7px;
 
-            .name {
-            text-overflow: ellipsis;
-            overflow: hidden;
-            color:red !important;
-            }
-            .addr {
-            font-size: 12px;
-            color: #b4b4b4;
-            }
-        }
-}
-</style>
 ```
 :::

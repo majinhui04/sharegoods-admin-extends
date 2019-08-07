@@ -6,9 +6,9 @@
             :value="currentValue"
             @input="onInputEvent"
             :placeholder="placeholder"
-            :trigger-on-focus="triggerFlag"
+            :trigger-on-focus="triggerOnFocus"
         >
-            <template slot-scope="{item}" v-if="isCustom">
+            <template slot-scope="{item}">
                 <slot :data="item"></slot>
             </template>
         </el-autocomplete>
@@ -41,17 +41,13 @@ export default {
             required: true,
             type: Promise
         },
-        triggerFlag: {
+        triggerOnFocus: {
             type: Boolean,
             default: true
         },
         className: {
             type: String,
             default: ''
-        },
-        isCustom: {
-            type: Boolean,
-            default: false
         }
     },
     mixins: [formMixins],
@@ -68,9 +64,8 @@ export default {
             this.querySearchAsync(queryString, cb);
         },
         querySearchAsync(queryString, cb) {
-            var searchResult = this.resultList;
-            var results = queryString ? searchResult.filter(this.createStateFilter(queryString)) : searchResult;
-            console.log('结果', results);
+            const searchResult = this.resultList;
+            let results = queryString ? searchResult.filter(this.createStateFilter(queryString)) : searchResult;
             clearTimeout(this.timeout);
             this.timeout = setTimeout(() => {
                 cb(results);
@@ -78,7 +73,6 @@ export default {
         },
         createStateFilter(queryString) {
             let val = this.value;
-            console.log('valllllll', val.value);
             return val => {
                 return val.value.toLowerCase().indexOf(queryString.toLowerCase()) > -1;
             };
