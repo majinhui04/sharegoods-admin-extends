@@ -86,7 +86,9 @@
                 for (const name in formData) {
                     if (typeof formData[name] === 'string') {
                         this.formData[name] = '';
-                    } else {
+                    } else if(Array.isArray(formData[name])){
+                        this.formData[name] = [];
+                    }else{
                         this.formData[name] = null;
                     }
                 }

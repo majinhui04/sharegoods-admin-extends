@@ -109,7 +109,7 @@
                     code: '',
                     status:'',
                     date: [new Date(+new Date()-30*24*60*60*1000),new Date()],
-                    area:['2']
+                    area:['2'],
                 },
                 filterConfig: {
                     labelWidth:'100px',
@@ -203,6 +203,12 @@
                                 },{
                                     label:'广州',
                                     value:'4'
+                                },{
+                                    label:'深圳',
+                                    value:'5'
+                                },{
+                                    label:'南京',
+                                    value:'6'
                                 }],
                         }
                     ]
@@ -460,7 +466,6 @@
             },
             search() {
                 console.log('getFormData', this.formData);
-                console.log('tableDataaaaaa',this.$refs['sgTableView'].getTableDataChange())
                 this.$refs['sgTableView'].fetchList({ page: 1 });
             },
             search1() {
