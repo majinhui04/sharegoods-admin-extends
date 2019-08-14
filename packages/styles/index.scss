@@ -5,7 +5,7 @@
         clear: both;
     }
     .sg-form-item {
-        label {
+        .el-form-item__label {
             width: 120px;
             text-align: right;
         }
@@ -19,6 +19,7 @@
             clear: both;
             display: block;
         }
+       
     }
 }
 
