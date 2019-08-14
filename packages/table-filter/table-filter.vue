@@ -46,9 +46,10 @@
     import TextInput from '../form/text-input';
     import TimeSelector from '../form/time-selector';
     import AutoComplete from '../form/auto-complete';
+    import Checkbox from '../form/checkbox'
     export default {
         name: 'SgTableFilter',
-        components: { SelectList, TextInput, TimeSelector, AutoComplete },
+        components: { SelectList, TextInput, TimeSelector, AutoComplete, Checkbox },
         props: {
             config: {
                 type: Object,

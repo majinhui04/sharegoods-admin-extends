@@ -47,6 +47,26 @@
                         {
                             "path": "/layout",
                             "title": "Layout 布局"
+                        },
+                        {
+                            "path": "/text-input",
+                            "title": "输入框"
+                        },
+                        {
+                            "path": "/select-list",
+                            "title": "下拉框"
+                        },
+                        {
+                            "path": "/auto-complete",
+                            "title": "自动补全组件"
+                        },
+                        {
+                            "path": "/time-selector",
+                            "title": "时间选择器"
+                        },
+                        {
+                            "path": "/checkbox",
+                            "title": "多选框"
                         }
                     ]
                 }
