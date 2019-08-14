@@ -1,6 +1,6 @@
 <template>
     <el-form-item :label="label" :class="className">
-        <el-checkbox-group v-model="currentValue">
+        <el-checkbox-group v-model="currentValue" @change="onInputEvent">
             <el-checkbox
                 :border="border"
                 v-for="(item,index) in options"
@@ -56,7 +56,7 @@ export default {
         },
         className: {
             type: String,
-            default: ''
+            default: 'sg-checkbox'
         }
     },
     mixins: [formMixins],
