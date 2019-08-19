@@ -23,5 +23,10 @@ export default [
         name: 'articleCreate',
         path: '/article/create',
         method: 'post'
+    },
+    {
+        name: 'restaurantList',
+        path: '/restaurant/list',
+        method: 'get'
     }
 ];

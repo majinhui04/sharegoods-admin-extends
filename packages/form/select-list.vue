@@ -1,6 +1,6 @@
 <template>
     <el-form-item :label="label">
-        <el-select v-model="currentValue" @input="onInputEvent" :multiple="multiple" :clearable="clearable">
+        <el-select v-model="currentValue" @input="onInputEvent" :multiple="multiple" :clearable="clearable" :filterable="filterable">
             <el-option
                 :placeholder="placeholder"
                 v-for="(item, index) in options"
@@ -39,6 +39,10 @@
                 default: null
             },
             multiple: {
+                type: Boolean,
+                default: false
+            },
+            filterable: {
                 type: Boolean,
                 default: false
             },

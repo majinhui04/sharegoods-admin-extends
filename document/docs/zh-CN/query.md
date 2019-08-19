@@ -4,31 +4,30 @@
 
 ### Attributes
 
-| 参数      | 说明          | 类型      | 可选值                           | 默认值  |
-|---------- |-------------- |---------- |--------------------------------  |-------- |
-| config | `fields`中的对象为各个表单域, `fieldType`包含这几种类型`TimeSelector`、`TextInput`、`TimeSelector`属性请参考[element](https://element.eleme.io/2.8/#/zh-CN/component/date-picker)| Array | — | - |
+| 参数   | 说明                                                                                                                                                                              | 类型  | 可选值 | 默认值 |
+| ------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----- | ------ | ------ |
+| config | `fields`中的对象为各个表单域, `fieldType`包含这几种类型`TimeSelector`、`TextInput`、`TimeSelector`属性请参考[element](https://element.eleme.io/2.8/#/zh-CN/component/date-picker) | Array | —      | -      |
 
 `table-view`组件：表格视图
 
 ### Attributes
 
-| 参数      | 说明          | 类型      | 可选值                           | 默认值  |
-|---------- |-------------- |---------- |--------------------------------  |-------- |
-| handleSelectAble | 用来决定当前行的CheckBox 是否可以勾选 | Function(row,index) | — | — |
-| height | 设置表格高度 | [Number,String] | — | — |
-| tools | 表格操作按钮列表 | Array | — | - |
-| tabs | 表单搜索状态列表 | Array | — | — |
-| config | 表格配置项，需要提供`columns`列表配置以及`load`加载数据方法 | Object | start/end/center/space-around/space-between | - |
-| paramsFormatter | 分页参数转化 | Object | - | {'page':'page','pageSize':'pageSize','activeName':'activeName'} |
-| responseFormatter | 获取异步数据的列表字段以及分页字段 | Function | - | 默认获取response.data or response.items作为list,response.total or response.totalNum作为总数|
-| pageConfig | 设置分页 | Object | — | {layout:''total, sizes, prev, pager, next, jumper''} |
+| 参数              | 说明                                                        | 类型                | 可选值                                      | 默认值                                                                                      |
+| ----------------- | ----------------------------------------------------------- | ------------------- | ------------------------------------------- | ------------------------------------------------------------------------------------------- |
+| handleSelectAble  | 用来决定当前行的CheckBox 是否可以勾选                       | Function(row,index) | —                                           | —                                                                                           |
+| height            | 设置表格高度                                                | [Number,String]     | —                                           | —                                                                                           |
+| tools             | 表格操作按钮列表                                            | Array               | —                                           | -                                                                                           |
+| tabs              | 表单搜索状态列表                                            | Array               | —                                           | —                                                                                           |
+| config            | 表格配置项，需要提供`columns`列表配置以及`load`加载数据方法 | Object              | start/end/center/space-around/space-between | -                                                                                           |
+| paramsFormatter   | 分页参数转化                                                | Object              | -                                           | {'page':'page','pageSize':'pageSize','activeName':'activeName'}                             |
+| responseFormatter | 获取异步数据的列表字段以及分页字段                          | Function            | -                                           | 默认获取response.data or response.items作为list,response.total or response.totalNum作为总数 |
+| pageConfig        | 设置分页                                                    | Object              | —                                           | {layout:''total, sizes, prev, pager, next, jumper''}                                        |
 
 ### 方法
 
-| 方法名     | 说明          |
-| ---- | ---- |
+| 方法名     | 说明              |
+| ---------- | ----------------- |
 | getChecked | 返回数据列表Array |
-
 
 ### 使用案例
 
@@ -49,12 +48,16 @@
                       @select="handleSelect"
                     ></el-autocomplete>
             </el-form-item>
-
+           <div slot="restaurant" slot-scope="{data}">             
+                <div class="name">{{ data.value }}</div>
+                <div class="addr">{{ data.address }}</div> 
+           </div>
+            
         </sg-table-filter>
         <sg-table-view 
             :height="300"
             :responseFormatter="responseFormatter"
-            :config="tableConfig" :tabs="tabs" ref="sgTableView" :params-formatter="{'activeName':'key'}" :tools="tools" :page-config="pageConfig" :handleSelectAble="handleSelectAble">
+            :config="tableConfig" :tabs="tabs" ref="sgTableView" :params-formatter="{'activeName':'key'}" :tools="tools" :page-config="pageConfig" :handleSelectAble="handleSelectAble" @handleInputBlur="handleInputBlur">
         
             <sg-export-button slot="tools" api="/article/export" type="warning">批量导出</sg-export-button>
            
@@ -102,9 +105,11 @@
                 formData: {
                    code2:'',
                     code3:'11',
+                    restaurant:'',
                     code: '',
                     status:'',
-                    date: [new Date(+new Date()-30*24*60*60*1000),new Date()]
+                    date: [new Date(+new Date()-30*24*60*60*1000),new Date()],
+                    area:['2'],
                 },
                 filterConfig: {
                     labelWidth:'100px',
@@ -137,6 +142,7 @@
                             name: 'payType',
                             label: '支付方式',
                             fieldType: 'SelectList',
+                            filterable: true,
                             options: [{
                                 "label":"请选择",
                                 "value":""
@@ -169,8 +175,42 @@
                             label: '商户号',
                             fieldType: 'TextInput',
                             cols: 8
+                        },
+                        {
+                            name: 'restaurant',
+                            label: '餐馆',
+                            fieldType: 'AutoComplete',
+                            options:this.getResultMethod(),
+                            className: 'my-autocomplete',
+                            createStateFilter:this.filterData
+                        },
+                        {
+                            name: 'area',
+                            label: '地区',
+                            fieldType: 'Checkbox',
+                            options:[
+                                {
+                                    label:'杭州',
+                                    value:'1',
+                                    disabled:true
+                                },{
+                                    label:'上海',
+                                    value:'2',
+                                    disabled:true
+                                },{
+                                    label:'北京',
+                                    value:'3'
+                                },{
+                                    label:'广州',
+                                    value:'4'
+                                },{
+                                    label:'深圳',
+                                    value:'5'
+                                },{
+                                    label:'南京',
+                                    value:'6'
+                                }],
                         }
-                  
                     ]
                 },
                 formData1: {
@@ -262,6 +302,7 @@
                             }
                         },
                         {
+                            type:'editTable',
                             label: '标题',
                             prop: 'title'
                         },
@@ -273,8 +314,7 @@
                             width:150,
                             type: 'slot',
                             prop: 'actions'
-                        }
-                        
+                        } 
                     ],
                     load: (params) => {
                         const data = { ...params, ...this.formData,$timeout:10000 };
@@ -288,6 +328,28 @@
             this.restaurants = this.loadAll();
         },
         methods: {
+            filterData(queryString){
+                return val => {
+                    return (val.value.indexOf(queryString) > -1 || val.address.indexOf(queryString) > -1);
+                };
+            },
+            getResultMethod(){
+                return this.$api.restaurantList().then(res => {
+                        let result = []
+                        res.data.forEach(item => {
+                            result.push({value:item.name,address:item.area})
+                        })
+                        return result
+                })
+            },
+            handleInputBlur(e){
+                const numregex = /^(?!0+(?:\.0+)?$)(?:[1-9]\d*|0)(?:\.\d{1,2})?$/;
+                if (!numregex.test(e.target.value)) {
+                    e.target.value = "";
+                    this.submitFlag = false;
+                    this.$message.error("请输入正整数或保留小数点后两位");
+                 }    
+            },
             querySearch(queryString, cb) {
                     var restaurants = this.restaurants;
                     var results = queryString ? restaurants.filter(this.createFilter(queryString)) : restaurants;
@@ -407,12 +469,12 @@
                 this.$refs['sgTableView'].fetchList({ page: 1 });
             },
             search1() {
-                console.log('当前表单提交')
                 this.$refs['sgTableView'].fetchList({ page: 1 });
             }
             
         }
     };
 </script>
+
 ```
 :::
