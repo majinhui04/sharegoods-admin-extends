@@ -6,9 +6,11 @@
 | ------------- | ----------------------------------------------------------------------- | -------- | --------------- | -------- |
 | api           | 上传文件接口地址                                                        | String   | —               | -        |
 | btnMsg        | 按钮文案                                                                | String   | —               | 上传文件 |
-| type          | 按钮类型                                                                | String   | —               | -        |
+| buttonType          | 按钮类型                                                                | String   | —               | primary      |
 | accept        | 接受上传的文件类型                                                      | String   | —  | -     ’.xls, .xlsx‘   |
 | headers      | 上传的请求头                                                                | Object   | —               |      |
+| isShowError      | 是否展示错误信息                                                                | Boolean   | —               |   true   |
+| listType     | 文件列表的类型                                                                | String   | text/picture/picture-card           |   text  |
 
 ### Events
 
@@ -23,12 +25,16 @@
 <template>
     <div class="content">
         <sg-upload
-            api="/goods/import" :headers="header"
+            ref="upload"
+            api="/api/tools/settle/batch"
+            :headers="header"
             @success='handleSuccess'
             @fail='handleFail'
-            tips="正在上传数据,请稍后"
-            loading='true'
-            :accept="accept"><span slot="msg">导入文件<i class="el-icon-upload el-icon--right"></i></span></sg-upload>
+            tips="正在上传文件,请稍后"
+            :accept="accept"
+            >
+            <span slot='title'>导入文件<i class="el-icon-upload el-icon--right"></i></span>
+        </sg-upload>
     </div>
 </template>
 <script>
@@ -36,21 +42,14 @@
         data(){
             return {
                 header: {token: 'xxxx'},
-                accept: '.xls, .xlsx',
+                accept: '.xls, .xlsx'
             }
         },
         methods:{
-            handleSuccess(value){
-                const data = value;
-                this.$message({
-                    message: data.response.msg || data.response.message,
-                    type: 'success',
-                    duration: 2000
-                });
+            handleSuccess(res) {
+                console.log(res, res.file, 'response, file, fileList')
             },
-            handleFail(value){
-                
-            }
+            handleFail(fail){}
         }
     }
 </script>
