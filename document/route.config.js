@@ -158,7 +158,7 @@ let route = [
                     lang
                 },
                 name: 'share-git',
-                component: resolve => require(['./docs/share/todo.md'], resolve)
+                component: resolve => require(['./docs/share/git.md'], resolve)
             },
             {
                 path: 'npm',
@@ -167,8 +167,18 @@ let route = [
                     description: 'npm',
                     lang
                 },
-                name: 'component-npm',
+                name: 'share-npm',
                 component: resolve => require(['./docs/share/npm.md'], resolve)
+            },
+            {
+                path: 'vscode',
+                meta: {
+                    title: 'vscode',
+                    description: 'vscode',
+                    lang
+                },
+                name: 'share-vscode',
+                component: resolve => require(['./docs/share/vscode.md'], resolve)
             }
         ]
     }
