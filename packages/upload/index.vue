@@ -2,6 +2,7 @@
 <template>
     <el-upload
         class="sg-upload"
+        ref="upfile" name="file"
         :drag='drag'
         :action='api'
         :accept="accept"
@@ -14,11 +15,14 @@
         :disabled="disabled"
         :file-list="fileListData"
         :list-type="listType"
-        :show-file-list="showFileList">
-        <el-button :size="size" :type="buttonType" v-loading.fullscreen.lock="loading" :element-loading-text="tips" element-loading-spinner="el-icon-loading">
-            <slot name='title'>上传文件</slot>
-        </el-button>
-        <slot name='button'></slot>
+        :show-file-list="showFileList"
+        :data='data'>
+        <slot name='button'>
+            <el-button :size="size" :type="buttonType" v-loading.fullscreen.lock="loading" :element-loading-text="tips" element-loading-spinner="el-icon-loading" :icon="icon">
+                {{buttonText}}
+            </el-button>
+        </slot>
+        <slot name='elButton'></slot>
     </el-upload>
 </template>
 
@@ -48,7 +52,16 @@
             // 请求头token
             headers: {
                 type: Object,
-                default: () => []
+                default() {
+                    return {}
+                }
+            },
+            // 上传时附带的额外参数
+            data: {
+                type: Object,
+                default() {
+                    return {}
+                }
             },
             // 上传的文件列表
             fileListData: {
@@ -57,7 +70,8 @@
             },
             // 接受上传的文件类型
             accept: {
-                type: String
+                type: String,
+                default: ''
             },
             size: {
                 type: String,
@@ -68,6 +82,7 @@
                 type: String,
                 default: 'primary'
             },
+            // 是否提示错误信息
             isShowError: {
                 type: Boolean,
                 default: true
@@ -83,6 +98,29 @@
             listType: {
                 type: String,
                 default: 'text'
+            },
+            limitM: {
+                type: Number,
+                default: 10
+            },
+            buttonText: {
+                type: String,
+                default: '上传文件'
+            },
+            // 上传文件的按钮图标
+            icon: {
+                type: String,
+                default: ''
+            },
+            // 上传成功提示的成功信息
+            message: {
+                type: String,
+                default: ''
+            },
+            // 是否显示上传成功的成功信息
+            isShowSuccess: {
+                type: Boolean,
+                default: false
             }
         },
         data() {
@@ -100,11 +138,12 @@
                     file,
                     fileList
                 });
+                this.disabled = false;
                 setTimeout(() => { this.loading = false }, 1000);
                 const message = response.msg || response.message || file.status;
-                this.$message({
+                this.isShowSuccess && this.$message({
                     type: 'success',
-                    message: message || '上传文件成功',
+                    message: message,
                     duration: 1500
                 });
             },
@@ -116,11 +155,24 @@
             },
             // 上传文件之前的钩子
             handleBeforeUpload(file) {
-                // let testmsg=file.name.substring(file.name.lastIndexOf('.')+1);
-                const isLt2M = file.size/1024/1024 < 10;
+                let name=file.name.substring(file.name.lastIndexOf('.'));
+                const accept = this.accept;
+                const acceptArr = accept && accept.split(',');
+                let isAccept = accept && acceptArr.some(item => {
+                    return item.trim() === name
+                })
+                if(!isAccept && accept){
+                    this.$message({
+                        message: `上传文件类型不正确!`,
+                        type: 'warning',
+                        duration: 1500
+                    });
+                    return false
+                }
+                const isLt2M = file.size/1024/1024 < this.limitM;
                 if(!isLt2M) {
                     this.$message({
-                        message: '上传文件大小不能超过 10MB!',
+                        message: `上传文件大小不能超过 ${this.limitM}MB!`,
                         type: 'warning',
                         duration: 1500
                     });
@@ -128,6 +180,7 @@
                 }
                 this.disabled = true;
                 this.loading = true;
+                this.$emit('before', file);
             },
             // 上传文件失败
             handleError(err, file, fileList) {
