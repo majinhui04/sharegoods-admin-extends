@@ -36,6 +36,7 @@
             :headers="header"
             @before="handleBefore"
             @success="handleSuccess"
+            @fail="handleFail"
             tips="正在上传文件,请稍后"
             :accept="accept"
             buttonText="批量上传"
@@ -47,13 +48,7 @@
         data() {
             return {
                 header: { token: 'xxxx' },
-                accept: '.xls, .xlsx, .csv',
-                tableHeader: [],
-                tableData: [],
-                excelData: {
-                    header: null,
-                    results: null
-                }
+                accept: '.xls, .xlsx, .csv'
             };
         },
         methods: {
@@ -61,9 +56,7 @@
                 console.log(res, res.file, 'response, file, fileList');
             },
             handleFail({err, file, fileList}) {},
-            handleBefore(file) {
-               
-            },
+            handleBefore(file) {},
         }   
     };
 </script>
