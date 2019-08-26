@@ -4,6 +4,7 @@ import Loading from '../packages/loading/index.js';
 import ExportButton from '../packages/export-button/index.js';
 import Pagination from '../packages/pagination/index.js';
 import Chart from '../packages/chart/index.js';
+import Upload from '../packages/upload/index.js';
 
 import '../packages/styles/index.scss';
 
@@ -13,7 +14,8 @@ const components = [
     ExportButton,
     TableFilter,
     TableView,
-    Loading
+    Loading,
+    Upload
 ];
 
 const install = function (Vue, opts = {}) {

@@ -49,6 +49,11 @@
                             "title": "Layout 布局"
                         },
                         {
+
+                            "path": "/upload",
+                            "title": "upload 上传"
+                        },
+                        {
                             "path": "/text-input",
                             "title": "输入框"
                         },
@@ -67,6 +72,7 @@
                         {
                             "path": "/checkbox",
                             "title": "多选框"
+
                         }
                     ]
                 }
