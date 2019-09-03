@@ -1,3 +1,7 @@
+function trim(x) {
+    return x.replace(/^\s+|\s+$/gm, '');
+}
+
 export default {
     props: ['name', 'value'],
 
@@ -8,7 +12,7 @@ export default {
     },
     methods: {
         onInputEvent(value) {
-            this.$emit('input', this.name, value);
+            this.$emit('input', this.name, trim(value));
         },
         reset() {
             this.currentValue = '';
@@ -16,7 +20,7 @@ export default {
     },
     watch: {
         value(val) {
-            this.currentValue = val;
+            this.currentValue = trim(val);
         }
     }
 };

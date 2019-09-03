@@ -1,6 +1,9 @@
 <template>
-    <div class="sg-table-container">
-        <slot name="table-tools"></slot>
+    <div class="sg-table-container" ref="container">
+        <div class="sg-tools-slot">
+            <slot name="table-tools">
+            </slot>
+        </div>
         <div class="sg-tools">
             <template v-for="(item,i) in tools">
                 <template v-if="item.type==='slot'">
@@ -13,41 +16,46 @@
                 </template>
             </template>
         </div>
-        <slot name="table-tabs"></slot>
-        <el-tabs @tab-click="handleTabClick" v-if="tabs" class="sg-tabs">
+        <div class="sg-tabs-slot">
+            <slot name="table-tabs"></slot>
+        </div>
+        <el-tabs @tab-click="handleTabClick" v-if="tabs" class="sg-tabs" v-model="activeName">
             <el-tab-pane :label="tab.label" :name="tab.name" v-for="(tab,index) in tabs" :key="index"></el-tab-pane>
         </el-tabs>
-        <el-table class="sg-table" v-loading="listLoading" :data="dataSource" border fit highlight-current-row
-                  style="width: 100%;" @selection-change="handleSelectionChange" :height="height" ref="table">
-            <template v-for="(col,index) in columns">
-                <el-table-column v-if="col.type ==='selection'" :key="index" type="selection" :width="col.width"
-                                 align="center" :selectable="handleSelectAble"></el-table-column>
-                <el-table-column v-else-if="col.type ==='index'" :key="index" type="index" :width="col.width"
-                                 align="center" :label="col.label"></el-table-column>
-                <template v-else-if="col.type==='slot'">
-                    <slot :name="col.name || col.prop"></slot>
-                </template>
-                <el-table-column v-else :label="col.label" :prop="col.prop" align="center" :key="index" :type="col.type"
-                                 :width="col.width">
-                    <template slot-scope="scope" v-if="col.prop">
-                        <template v-if="col.customRender">
-                            <div v-html="col.customRender(scope.row)"></div>
-                        </template>
-                        <template v-else-if="col.buttons">
-                            <template v-for="(item,i) in col.buttons">
-                                <el-button :type="item.type || 'primary'" :key="i" @click="item.onClick(scope.row)"
-                                           v-if="item.customRender?item.customRender(scope.row): true">
-                                    {{item.customRender?item.customRender(scope.row):item.label}}
-                                </el-button>
-                            </template>
-                        </template>
-                        <template v-else-if="col.prop">{{scope.row[col.prop]}}</template>
-                        <template v-else></template>
+        <div class="sg-table-wrapper">
+            <el-table class="sg-table dm-flexbox-1" v-loading="listLoading" :data="dataSource" border fit
+                      highlight-current-row
+                      style="width: 100%;" @selection-change="handleSelectionChange" :height="height" ref="table">
+                <template v-for="(col,index) in columns">
+                    <el-table-column v-if="col.type ==='selection'" :key="index" type="selection" :width="col.width"
+                                     align="center" :selectable="handleSelectAble"></el-table-column>
+                    <el-table-column v-else-if="col.type ==='index'" :key="index" type="index" :width="col.width"
+                                     align="center" :label="col.label"></el-table-column>
+                    <template v-else-if="col.type==='slot'">
+                        <slot :name="col.name || col.prop"></slot>
                     </template>
-                </el-table-column>
-            </template>
-        </el-table>
-        <div class style="height: 14px;" v-if="paginationFixed"></div>
+                    <el-table-column v-else :label="col.label" :prop="col.prop" align="center" :key="index"
+                                     :type="col.type"
+                                     :width="col.width">
+                        <template slot-scope="scope" v-if="col.prop">
+                            <template v-if="col.customRender">
+                                <div v-html="col.customRender(scope.row)"></div>
+                            </template>
+                            <template v-else-if="col.buttons">
+                                <template v-for="(item,i) in col.buttons">
+                                    <el-button :type="item.type || 'primary'" :key="i" @click="item.onClick(scope.row)"
+                                               v-if="item.customRender?item.customRender(scope.row): true">
+                                        {{item.customRender?item.customRender(scope.row):item.label}}
+                                    </el-button>
+                                </template>
+                            </template>
+                            <template v-else-if="col.prop">{{scope.row[col.prop]}}</template>
+                            <template v-else></template>
+                        </template>
+                    </el-table-column>
+                </template>
+            </el-table>
+        </div>
         <pagination v-show="total>0" :total="total" :page.sync="pagination.page" :limit.sync="pagination.pageSize"
                     @pagination="fetchList" :class="{'fixed':paginationFixed}" class="right sg-pagination"
                     :layout="pageConfig.layout"/>
@@ -55,12 +63,23 @@
 </template>
 
 <script>
+    import { addResizeListener, removeResizeListener } from '../../src/utils/resize-event';
     import Pagination from '../pagination/index.vue';
 
     export default {
         name: 'SgTableView',
         components: { Pagination },
         props: {
+            resizeTarget: {
+                type: String,
+                default: ''
+            },
+            resizeHandler: {
+                type: Function,
+                default() {
+                    return 0;
+                }
+            },
             paginationFixed: {
                 type: Boolean,
                 default: false
@@ -102,10 +121,6 @@
                     return {};
                 }
             },
-            height: {
-                type: [Number, String],
-                default: null
-            },
             responseFormatter: {
                 type: Function,
                 default(res) {
@@ -127,10 +142,11 @@
         },
         data() {
             return {
+                height: null,
                 activeName: '',
                 pagination: {
                     page: 1,
-                    pageSize: this.pageConfig.pageSize || 10
+                    pageSize: this.pageConfig.pageSize || 20
                 },
                 total: 0,
                 listLoading: false,
@@ -147,7 +163,32 @@
                 page: 1
             });
         },
+        destroyed() {
+            if (this.resizeTarget) {
+                let resizeTarget = this.resizeTarget;
+                let dom = document.getElementById(resizeTarget);
+                dom && removeResizeListener(dom, this.resize);
+            }
+        },
+        mounted() {
+            if (this.resizeTarget) {
+                let resizeTarget = this.resizeTarget;
+                let dom = document.getElementById(resizeTarget);
+                dom && addResizeListener(dom, this.resize);
+                this.$nextTick(() => {
+                    this.resize();
+                });
+            }
+        },
         methods: {
+            resize() {
+                let H = window.innerHeight;
+                let table = this.$refs.table.$el;
+                let tableRect = table.getBoundingClientRect();
+                let top = tableRect.top;
+                let pageHeight = 70;
+                this.height = H - top - pageHeight;
+            },
             paramsSerializer(params) {
                 const result = {};
                 const formatter = this.paramsFormatter;
@@ -173,6 +214,16 @@
             handleSelectionChange(val) {
                 this.multipleSelection = val;
             },
+            scrollTop() {
+                this.$nextTick(() => {
+                    try {
+                        let $el = this.$refs.table.$el, $wrap = $el.getElementsByClassName('el-table__body-wrapper')[0];
+                        $wrap && ($wrap.scrollTop = 0);
+                    } catch (e) {
+                        console.log(e);
+                    }
+                });
+            },
             // 加载数据
             fetchList({ page }) {
                 const activeName = this.activeName;
@@ -186,12 +237,12 @@
                     this.dataSource = result.list;
                     this.total = result.total;
                     this.listLoading = false;
-                    this.$refs.table.bodyWrapper.scrollTop = 0;
+                    this.scrollTop();
                 }).catch(() => {
                     this.dataSource = [];
                     this.total = 0;
                     this.listLoading = false;
-                    this.$refs.table.bodyWrapper.scrollTop = 0;
+                    this.scrollTop();
                 });
             }
         }

@@ -20,7 +20,7 @@
         props: {
             scrollContainer: {
                 type: String,
-                default: 'appContent'
+                default: ''
             },
             total: {
                 required: true,

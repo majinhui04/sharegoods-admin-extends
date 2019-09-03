@@ -21,7 +21,9 @@
 | config            | 表格配置项，需要提供`columns`列表配置以及`load`加载数据方法 | Object              | start/end/center/space-around/space-between | -                                                                                           |
 | paramsFormatter   | 分页参数转化                                                | Object              | -                                           | {'page':'page','pageSize':'pageSize','activeName':'activeName'}                             |
 | responseFormatter | 获取异步数据的列表字段以及分页字段                          | Function            | -                                           | 默认获取response.data or response.items作为list,response.total or response.totalNum作为总数 |
-| pageConfig        | 设置分页                                                    | Object              | —                                           | {layout:''total, sizes, prev, pager, next, jumper''}                                        |
+| pageConfig        | 设置分页                                                    | Object              | —                                           | {layout: 'total, sizes, prev, pager, next, jumper'}                                    |
+| resize-target        | 父容器ID,通过监听容器变化来控制table高度，一般是有滚动条的父容器                                                    | String              | —                                           | }                                        |
+
 
 ### 方法
 
