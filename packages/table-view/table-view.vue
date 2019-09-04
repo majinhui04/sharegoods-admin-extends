@@ -1,20 +1,26 @@
 <template>
-    <div class="sg-table-container" ref="container">
+    <div class="sg-table-container" ref="wrap">
         <div class="sg-tools-slot">
             <slot name="table-tools">
             </slot>
         </div>
         <div class="sg-tools">
-            <template v-for="(item,i) in tools">
-                <template v-if="item.type==='slot'">
-                    <slot :name="item.name"></slot>
+            <div class="sg-tools-content">
+                <template v-for="(item,i) in tools">
+                    <template v-if="item.type==='slot'">
+                        <slot :name="item.name"></slot>
+                    </template>
+                    <template v-else>
+                        <el-button :type="item.type ||
+                        'primary'" :key="i"
+                                   @click="item.onClick" v-if='!item.hidden'>{{item.label}}
+                        </el-button>
+                    </template>
                 </template>
-                <template v-else>
-                    <el-button :type="item.type || 'primary'" :key="i"
-                               @click="item.onClick" v-if='!item.hidden'>{{item.label}}
-                    </el-button>
-                </template>
-            </template>
+            </div>
+            <pagination v-if="resizeTarget" v-show="total>0" :total="total" :page.sync="pagination.page" :limit.sync="pagination.pageSize"
+                        @pagination="fetchList" :class="{'fixed':paginationFixed}" class="right sg-pagination"
+                        :layout="pageConfig.layout"/>
         </div>
         <div class="sg-tabs-slot">
             <slot name="table-tabs"></slot>
@@ -55,10 +61,11 @@
                     </el-table-column>
                 </template>
             </el-table>
+            <pagination v-if="!resizeTarget" v-show="total>0" :total="total" :page.sync="pagination.page" :limit.sync="pagination.pageSize"
+                        @pagination="fetchList" :class="{'fixed':paginationFixed}" class="right sg-pagination"
+                        :layout="pageConfig.layout"/>
         </div>
-        <pagination v-show="total>0" :total="total" :page.sync="pagination.page" :limit.sync="pagination.pageSize"
-                    @pagination="fetchList" :class="{'fixed':paginationFixed}" class="right sg-pagination"
-                    :layout="pageConfig.layout"/>
+
     </div>
 </template>
 
@@ -73,6 +80,10 @@
             resizeTarget: {
                 type: String,
                 default: ''
+            },
+            resizeMinHeight: {
+                type: Number,
+                default: 100
             },
             resizeHandler: {
                 type: Function,
@@ -89,7 +100,7 @@
                 default() {
                     return {
                         layout: 'total, sizes, prev, pager, next, jumper',
-                        pageSize: 10
+                        pageSize: 20
                     };
                 }
             },
@@ -186,8 +197,10 @@
                 let table = this.$refs.table.$el;
                 let tableRect = table.getBoundingClientRect();
                 let top = tableRect.top;
-                let pageHeight = 70;
-                this.height = H - top - pageHeight;
+                let pageHeight = 30;
+                let resizeMinHeight = this.resizeMinHeight;
+                let height = H - top - pageHeight;
+                this.height = Math.max(resizeMinHeight, height);
             },
             paramsSerializer(params) {
                 const result = {};
