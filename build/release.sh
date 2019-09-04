@@ -25,6 +25,7 @@ then
   git checkout dev
   git rebase master
   git push github dev
+  git push origin dev
 
   if [[ $VERSION =~ "beta" ]]
     then
