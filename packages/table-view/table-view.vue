@@ -28,7 +28,7 @@
                     <slot :name="col.name || col.prop"></slot>
                 </template>
                 <el-table-column v-else :label="col.label" :prop="col.prop" align="center" :key="index" :type="col.type"
-                                 :width="col.width" :fixed="col.fixed || false">
+                                 :width="col.width">
                     <template slot-scope="scope" v-if="col.prop">
                         <template v-if="col.customRender">
                             <div v-html="col.customRender(scope.row)"></div>

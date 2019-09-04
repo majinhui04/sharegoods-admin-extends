@@ -66,7 +66,7 @@
                     <sg-export-button api="/article/export" tips="正在导出数据,请稍后" :before-export="handleExport(scope.row)">导出</sg-export-button>
                 </template>
             </el-table-column>
-            <el-table-column align="center" slot="actions" label="操作" width="220" fixed="right">
+            <el-table-column align="center" slot="actions" label="操作" width="220">
                 <template slot-scope="scope">
                     <template v-if="scope.row.status==='draft'">
                         <el-button type="primary" @click="handleDelete(scope.row)">发布</el-button>
@@ -292,13 +292,6 @@
                             customRender: (row) => {
                                 const result = this.$options.filters.sepThousand(row.pageviews);
                                 return `<b>${result}</b>`;
-                            }
-                        },
-                        {
-                            label: '日期',
-                            prop: 'timestamp',
-                            customRender: (row) => {
-                                return this.$options.filters.formatDate(row.timestamp);
                             }
                         },
                         {
