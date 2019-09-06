@@ -1,9 +1,10 @@
 function trim(x) {
     if(x && typeof x === 'string'){
         return x.replace(/^\s+|\s+$/gm, '');
-    }
-    if(x && typeof x === 'number'){
+    }else if(x && typeof x === 'number'){
         return Number(x.toString().replace(/^\s+|\s+$/gm, ''));
+    }else {
+        return ''
     }
 }
 
