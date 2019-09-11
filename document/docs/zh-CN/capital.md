@@ -34,12 +34,51 @@ npm run dev
 :::
 
 ### 路由配置
-`/src/views/capital/router/permission/account.js`
+- 分为固定路由以及权限路由
+- 固定路由包括`/login`、`/404`(/src/views/capital/router/constant-router.js)、`/403`
+- 权限路由[`/src/views/capital/router/permission/account.js`],实际页面路由以资源页面路由为准
 
 ### API配置
 `/src/views/capital/api/modules`
+```javascript
+{
+    // name 必填
+    name: 'userLevelListAll',
+    // label 可选
+    label: '用户等级',
+    // path 必填
+    path: '/data/userlevel',
+    // method 可选 默认post
+    method: 'get',
+    // config 可选 接口自定义请求头以及配置
+    config:{    
+        timeout:10000,
+        headers:{test:1}
+    },
+    // processData 可选 接口请求前处理参数
+    processData(data) {
+        if (data.category && !data.grade) {
+            data.grade = 1;
+        }
+        return data;
+    },
+    // success 可选 接口成功后处理数据
+    success(res) {
+        const list = res.data || [];
+        list.forEach(item => {
+            item._uuid = item.level;
+            item._label = item.remark;
+        });
+        return res;
+    }
+}
+ 
+```
+### 权限
+- 在src下面的settings.js, 根据实际需求改变项目的权限, 设置isAuth
+- 在具体页面中 使用 $hasAuth('xxxxxx') v-auth="'xxx'" 来判断是否按钮权限
 
-快速配置接口
+### 快速配置接口
 ```javascript
 export default [
     {
@@ -53,7 +92,7 @@ export default [
         label: '平台子账户查询',
         path: '/platform/sub/account',
         method: 'post'
-    }]
+    }];
 ```
 :::tip
 接口`name`必须唯一
@@ -61,8 +100,29 @@ export default [
 
 使用
 ```javascript
-this.$api.platformAccount({},{isShowError:true}).then(res=>{console.log('success')})
+this.$api.platformAccount({},{isShowError:true,$timeout:5000}).then(res=>{console.log('success')})
 ```
+:::tip
+如果参数中包含`$timeout`则表明这个接口使用自定义的超时时间
+:::
+
+### 组件
+使用内部自定义的sharegoods-UI
+具体可参考
+[sharegoods-ui](http://static.mr.com/#/zh-CN/component/query)
+
+### Mock
+在`mock`下建立数据和路径的关联,路径既是API中配置的`path`，文件名既API中配置的`name`(放在`mock`文件夹下)
+
+
+## 测试账号
+[测试环境](http://testcapital.sharegoodsmall.com/#/login)
+:::tip
+liukang
+lk123456 -管理员权限
+:::
+
+
 
 
 
