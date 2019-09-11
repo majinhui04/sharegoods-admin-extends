@@ -40,7 +40,7 @@
     <div class="content">
         <sg-table-filter :config="filterConfig" v-model="formData" @submit="search" style="margin-bottom: 15px;">
            
-            <el-form-item label="地址" slot="autocomplete" class="sg-form-item">
+            <el-form-item label="地址" slot="autocomplete" class="sg-form-item" prop="address">
                 <el-autocomplete
                       class="inline-input"
                       v-model="formData.address"

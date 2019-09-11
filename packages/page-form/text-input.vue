@@ -2,12 +2,14 @@
     <el-form-item :label="label" :prop="name">
         <el-input
             :clearable="clearable"
-            type="text"
+            :type="type"
             :name="name"
             :value="currentValue"
+            :disabled="disabled"
             @input="onInputEvent"
             :placeholder="placeholder">
         </el-input>
+        <slot v-bind:scope="this"></slot>
     </el-form-item>
 </template>
 
@@ -17,21 +19,9 @@
     export default {
         name: 'TextInput',
         props: {
-            clearable: {
-                type: Boolean,
-                default: true
-            },
-            placeholder: {
+            type: {
                 type: String,
-                default: '请输入'
-            },
-            label: {
-                type: String,
-                default: ''
-            },
-            name: {
-                type: String,
-                default: ''
+                default: 'text'
             },
             value: {
                 type: [String, Number],

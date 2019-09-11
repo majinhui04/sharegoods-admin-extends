@@ -8,6 +8,8 @@
             :value-format="valueFormat"
             :format="format"
             :default-time="defaultTime"
+            :disabled="disabled"
+            :pick-options="pickerOptions"
             placeholder="选择日期时间">
         </el-date-picker>
     </el-form-item>
@@ -18,25 +20,9 @@
 
     export default {
         props: {
-            clearable: {
-                type: Boolean,
-                default: true
-            },
-            placeholder: {
-                type: String,
-                default: '请选择'
-            },
-            label: {
-                type: String,
-                default: ''
-            },
-            name: {
-                type: String,
-                default: ''
-            },
             value: {
-                type: [String, Number, Array],
-                default: null
+                type: [String, Number, Array, Date],
+                default: ''
             },
             type: {
                 type: String,
@@ -46,6 +32,12 @@
                 type: String,
                 default: 'yyyy-MM-dd HH:mm:ss'
             },
+            pickerOptions: {
+                type: Object,
+                default() {
+                    return {};
+                }
+            },
             format: {
                 type: String,
                 default: 'yyyy-MM-dd'
@@ -53,7 +45,11 @@
             defaultTime: {
                 type: Array,
                 default() {
-                    return ['00:00:00', '23:59:59'];
+                    if (this.type === 'date' || this.type === 'datetime') {
+                        return null;
+                    } else {
+                        return ['00:00:00', '23:59:59'];
+                    }
                 }
             }
         },

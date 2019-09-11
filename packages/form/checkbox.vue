@@ -1,5 +1,5 @@
 <template>
-    <el-form-item :label="label" :class="className">
+    <el-form-item :label="label" :class="className" :prop="name">
         <el-checkbox-group v-model="currentValue" @change="onInputEvent">
             <el-checkbox
                 :border="border"

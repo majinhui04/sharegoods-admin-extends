@@ -6,7 +6,7 @@
                  class="sg-filter-form"
                  :label-width="labelWidth"
                  @submit.native.prevent
-                 >
+        >
             <template :span="field.cols" v-for="(field, index) in config.fields">
                 <slot v-if="field.type === 'slot'" :name="field.name"></slot>
                 <component
@@ -33,8 +33,9 @@
             </template>
             <slot name="buttons">
                 <el-form-item class="actions sg-form-item" label=" ">
-                    <el-button type="primary" @click="submit" native-type="submit" size="small">{{onSubmitText}}</el-button>
-                    <el-button type="default" @click="reset" size="small">{{onResetText}}</el-button>
+                    <el-button type="primary" @click="submit" native-type="submit" size="small">{{onSubmitText}}
+                    </el-button>
+                    <el-button type="default" @click="resetFields" size="small">{{onResetText}}</el-button>
                 </el-form-item>
             </slot>
         </el-form>
@@ -46,7 +47,8 @@
     import TextInput from '../form/text-input';
     import TimeSelector from '../form/time-selector';
     import AutoComplete from '../form/auto-complete';
-    import Checkbox from '../form/checkbox'
+    import Checkbox from '../form/checkbox';
+
     export default {
         name: 'SgTableFilter',
         components: { SelectList, TextInput, TimeSelector, AutoComplete, Checkbox },
@@ -72,7 +74,7 @@
                 onResetText: this.config.onResetText || '重置'
             };
         },
-        created(){
+        created() {
         },
         methods: {
             updateForm(fieldName, value) {
@@ -81,14 +83,18 @@
             submit() {
                 this.$emit('submit');
             },
+            resetFields() {
+                this.$refs['form'].resetFields();
+                this.$emit('reset');
+            },
             reset() {
                 const formData = this.formData;
                 for (const name in formData) {
                     if (typeof formData[name] === 'string') {
                         this.formData[name] = '';
-                    } else if(Array.isArray(formData[name])){
+                    } else if (Array.isArray(formData[name])) {
                         this.formData[name] = [];
-                    }else{
+                    } else {
                         this.formData[name] = null;
                     }
                 }

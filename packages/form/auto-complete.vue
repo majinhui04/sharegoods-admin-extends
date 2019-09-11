@@ -1,5 +1,5 @@
 <template>
-    <el-form-item :label="label">
+    <el-form-item :label="label" :prop="name">
         <el-autocomplete
             :popper-class="className"
             :fetch-suggestions="searchResult"

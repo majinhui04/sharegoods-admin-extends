@@ -6,6 +6,7 @@
                 v-for="(item, index) in options"
                 :key="index"
                 :label="item.label"
+                :disabled="disabled"
                 :value="item.value">
             </el-option>
         </el-select>
@@ -18,22 +19,6 @@
     export default {
         name: 'SelectList',
         props: {
-            clearable: {
-                type: Boolean,
-                default: true
-            },
-            placeholder: {
-                type: String,
-                default: '请选择'
-            },
-            label: {
-                type: String,
-                default: ''
-            },
-            name: {
-                type: String,
-                default: ''
-            },
             value: {
                 type: [String, Number, Array],
                 default: null
