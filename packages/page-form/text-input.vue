@@ -1,9 +1,11 @@
 <template>
     <el-form-item :label="label" :prop="name">
         <el-input
-            :clearable="clearable"
             :type="type"
+            :clearable="clearable"
+            :show-password="type==='password'"
             :name="name"
+            :rows="rows"
             :value="currentValue"
             :disabled="disabled"
             @input="onInputEvent"
@@ -22,6 +24,11 @@
             type: {
                 type: String,
                 default: 'text'
+            },
+            // 只针对type='textarea'
+            rows: {
+                type: Number,
+                default: 4
             },
             value: {
                 type: [String, Number],

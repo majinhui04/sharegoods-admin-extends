@@ -10,7 +10,7 @@
             :default-time="defaultTime"
             :disabled="disabled"
             :pick-options="pickerOptions"
-            placeholder="选择日期时间">
+            :placeholder="placeholder">
         </el-date-picker>
     </el-form-item>
 </template>
@@ -27,6 +27,10 @@
             type: {
                 type: String,
                 default: 'datetime'
+            },
+            placeholder: {
+                type: String,
+                default: '请选择日期'
             },
             valueFormat: {
                 type: String,

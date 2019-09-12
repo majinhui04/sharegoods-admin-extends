@@ -120,6 +120,16 @@ let route = [
                 component: resolve => require(['./docs/zh-CN/query.md'], resolve)
             },
             {
+                path: 'page-form',
+                meta: {
+                    title: 'page-form',
+                    description: 'page-form',
+                    lang
+                },
+                name: 'component-page-form',
+                component: resolve => require(['./docs/zh-CN/page-form.md'], resolve)
+            },
+            {
                 path: 'export-button',
                 meta: {
                     title: 'export-button',

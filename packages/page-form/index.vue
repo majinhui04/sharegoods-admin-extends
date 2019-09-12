@@ -43,10 +43,11 @@
     import TimeSelector from './time-selector';
 
     const types = {
+        input: 'TextInput',
         text: 'TextInput',
         password: 'TextInput',
         textarea: 'TextInput',
-        datetime: 'TimeSelector',
+        date: 'TimeSelector',
         select: 'SelectList'
     };
 
@@ -118,7 +119,11 @@
                 return this.fieldList.filter(item => !item.hasOwnProperty('show') || (item.hasOwnProperty('show') && item.show));
             },
             updateForm(fieldName, value) {
-                this.formData[fieldName] = value;
+                if (this.formData[fieldName]) {
+                    this.formData[fieldName] = value;
+                } else {
+                    this.$set(this.formData, fieldName, value);
+                }
                 this.$emit(`update-${fieldName}`, value);
             },
             submit() {
