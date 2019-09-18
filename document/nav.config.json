@@ -41,6 +41,10 @@
                             "title": "导出按钮"
                         },
                         {
+                            "path": "/page-dialog",
+                            "title": "弹出框"
+                        },
+                        {
                             "path": "/page-form",
                             "title": "动态表单"
                         },

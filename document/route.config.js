@@ -120,6 +120,16 @@ let route = [
                 component: resolve => require(['./docs/zh-CN/query.md'], resolve)
             },
             {
+                path: 'page-dialog',
+                meta: {
+                    title: 'page-dialog',
+                    description: 'page-dialog',
+                    lang
+                },
+                name: 'component-page-dialog',
+                component: resolve => require(['./docs/zh-CN/page-dialog.md'], resolve)
+            },
+            {
                 path: 'page-form',
                 meta: {
                     title: 'page-form',

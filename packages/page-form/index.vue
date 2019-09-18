@@ -8,6 +8,7 @@
             :model="formData"
             class="sg-page-form"
             :label-width="labelWidth"
+            :size="size"
             @submit.native.prevent
         >
             <template v-for="(field, index) in getConfigList()">
@@ -41,8 +42,10 @@
     import SelectList from './select-list';
     import TextInput from './text-input';
     import TimeSelector from './time-selector';
+    import Radio from './radio';
 
     const types = {
+        radio: 'Radio',
         input: 'TextInput',
         text: 'TextInput',
         password: 'TextInput',
@@ -53,11 +56,15 @@
 
     export default {
         name: 'SgPageForm',
-        components: { SelectList, TextInput, TimeSelector },
+        components: { SelectList, TextInput, TimeSelector, Radio },
         props: {
             inline: {
                 type: Boolean,
                 default: false
+            },
+            size: {
+                type: String,
+                default: 'small' // medium / small / mini
             },
             // 相关字段
             fieldList: {
@@ -119,11 +126,12 @@
                 return this.fieldList.filter(item => !item.hasOwnProperty('show') || (item.hasOwnProperty('show') && item.show));
             },
             updateForm(fieldName, value) {
-                if (this.formData[fieldName]) {
-                    this.formData[fieldName] = value;
-                } else {
-                    this.$set(this.formData, fieldName, value);
-                }
+                // if (this.formData[fieldName]) {
+                //     this.formData[fieldName] = value;
+                // } else {
+                //     this.$set(this.formData, fieldName, value);
+                // }
+                this.$set(this.formData, fieldName, value);
                 this.$emit(`update-${fieldName}`, value);
             },
             submit() {

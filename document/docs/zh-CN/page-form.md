@@ -1,5 +1,5 @@
 ## page-form 页面表单
-用来动态生成表单,目前支持`fieldType` 为 `input`、`date`、`select`。
+用来动态生成表单,目前支持`fieldType` 为 `input`、`date`、`select`、`radio`。
 其中`input`中的`type`又包含`text`、`password`、`textarea`
 
 ### Attributes
