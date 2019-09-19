@@ -32,7 +32,7 @@
         <div class="sg-table-wrapper">
             <el-table class="sg-table dm-flexbox-1" v-loading="listLoading" :data="dataSource" border fit
                       highlight-current-row
-                      style="width: 100%;" @selection-change="handleSelectionChange" :height="height" ref="table">
+                      style="width: 100%;" @selection-change="handleSelectionChange" :height="tableHeight" ref="table">
                 <template v-for="(col,index) in columns">
                     <el-table-column v-if="col.type ==='selection'" :key="index" type="selection" :width="col.width"
                                      align="center" :selectable="handleSelectAble"></el-table-column>
@@ -79,8 +79,8 @@
         name: 'SgTableView',
         components: { Pagination },
         props: {
-            tableHeight: {
-                type: Number,
+            height: {
+                type: [Number, String],
                 default() {
                     return undefined;
                 }
@@ -161,7 +161,7 @@
         },
         data() {
             return {
-                height: null,
+                tableHeight: null,
                 activeName: '',
                 pagination: {
                     page: 1,
@@ -178,8 +178,8 @@
             if (this.tabs) {
                 this.activeName = this.tabs[0].name;
             }
-            if (this.tableHeight) {
-                this.height = this.tableHeight;
+            if (this.height) {
+                this.tableHeight = this.height;
             }
             this.auto && this.fetchList({
                 page: 1
@@ -211,7 +211,7 @@
                 let pageHeight = 30;
                 let resizeMinHeight = this.resizeMinHeight;
                 let height = H - top - pageHeight;
-                this.height = Math.max(resizeMinHeight, height);
+                this.tableHeight = Math.max(resizeMinHeight, height);
             },
             paramsSerializer(params) {
                 const result = {};

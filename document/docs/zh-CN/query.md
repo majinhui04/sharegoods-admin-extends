@@ -15,7 +15,7 @@
 | 参数              | 说明                                                        | 类型                | 可选值                                      | 默认值                                                                                      |
 | ----------------- | ----------------------------------------------------------- | ------------------- | ------------------------------------------- | ------------------------------------------------------------------------------------------- |
 | handleSelectAble  | 用来决定当前行的CheckBox 是否可以勾选                       | Function(row,index) | —                                           | —                                                                                           |
-| table-height            | 设置表格高度                                                | [Number,String]     | —                                           | —                                                                                           |
+| height            | 设置表格高度                                                | [Number,String]     | —                                           | —                                                                                           |
 | tools             | 表格操作按钮列表                                            | Array               | —                                           | -                                                                                           |
 | tabs              | 表单搜索状态列表                                            | Array               | —                                           | —                                                                                           |
 | config            | 表格配置项，需要提供`columns`列表配置以及`load`加载数据方法 | Object              | start/end/center/space-around/space-between | -                                                                                           |
@@ -57,7 +57,7 @@
             
         </sg-table-filter>
         <sg-table-view 
-            :table-height="500"
+            :height="500"
             :responseFormatter="responseFormatter"
             :config="tableConfig" :tabs="tabs" ref="sgTableView" :params-formatter="{'activeName':'key'}" :tools="tools" :page-config="pageConfig" :handleSelectAble="handleSelectAble" @handleInputBlur="handleInputBlur">
         
