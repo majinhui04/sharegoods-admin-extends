@@ -18,7 +18,8 @@
                     </template>
                 </template>
             </div>
-            <pagination v-if="resizeTarget" v-show="total>0" :total="total" :page.sync="pagination.page" :limit.sync="pagination.pageSize"
+            <pagination v-if="resizeTarget" v-show="total>0" :total="total" :page.sync="pagination.page"
+                        :limit.sync="pagination.pageSize"
                         @pagination="fetchList" :class="{'fixed':paginationFixed}" class="right sg-pagination"
                         :layout="pageConfig.layout"/>
         </div>
@@ -61,7 +62,8 @@
                     </el-table-column>
                 </template>
             </el-table>
-            <pagination v-if="!resizeTarget" v-show="total>0" :total="total" :page.sync="pagination.page" :limit.sync="pagination.pageSize"
+            <pagination v-if="!resizeTarget" v-show="total>0" :total="total" :page.sync="pagination.page"
+                        :limit.sync="pagination.pageSize"
                         @pagination="fetchList" :class="{'fixed':paginationFixed}" class="right sg-pagination"
                         :layout="pageConfig.layout"/>
         </div>
@@ -77,6 +79,12 @@
         name: 'SgTableView',
         components: { Pagination },
         props: {
+            tableHeight: {
+                type: Number,
+                default() {
+                    return undefined;
+                }
+            },
             resizeTarget: {
                 type: String,
                 default: ''
@@ -169,6 +177,9 @@
         created() {
             if (this.tabs) {
                 this.activeName = this.tabs[0].name;
+            }
+            if (this.tableHeight) {
+                this.height = this.tableHeight;
             }
             this.auto && this.fetchList({
                 page: 1
