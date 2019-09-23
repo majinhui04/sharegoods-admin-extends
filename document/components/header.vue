@@ -294,6 +294,9 @@
                             :to="`/${ lang }/component`">指南
                         </router-link>
                     </li>
+                    <li class="nav-item">
+                        <a href="/doc/index.html">前端成长笔记</a>
+                    </li>
                     <!-- gap -->
                     <li class="nav-item" v-show="isComponentPage">
                         <div class="nav-gap"></div>

@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>PC对接iframe</title>
+    <meta charset="UTF-8">
+    <meta name="description" content="" />
+    <meta name="keywords" content="" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="format-detection" content="telephone=no, email=no" />
+    <link rel="shortcut icon" href="data:image/x-icon;," type="image/x-icon">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=0" />
+    <link rel="stylesheet" href="https://a.alipayobjects.com/g/antui/antui/10.0.0/rem/??antui.css,widget/search.css,widget/toast.css">
+    <style>
+
+
+        .phone {
+            border: 1px solid #ddd;
+            width: 320px;
+            height:480px;
+        }
+    </style>
+</head>
+<body>
+<!--调用发短信或者打电话的iframe-->
+<!--<iframe  id="phoneIframe" src="" class="phone"></iframe>-->
+
+<div>
+    <button type="button" class="am-button" id="createBtn">新建页面</button>
+</div>
+
+<!--http://zeptojs.com/zepto.min.js-->
+<script src="/javascripts/zepto.min.js"></script>
+
+<!--<script src="/javascripts/vconsole.min.js?v=3.0.0"></script>-->
+<!--<script>-->
+    <!--var vConsole = new VConsole();-->
+<!--</script>-->
+
+<script>
+
+    $(function() {
+        var urls = [
+            'http://bd-int.shuli.com/gateway.do?api=slops.authcoll.channel.page&bizContent=W0e9XWihUHHdh4fkJDxmf9xFrmObKUxijw%2Bn%2FkDlzZeGsiOr4TiaC%2FzyltxAnexxZ2aDl94iVrt7ESmgs3XVfJuvCu4FhX8k75XzjNZXDccMjmdvyz896TMoyiuEorTR&bizType=BIZ_TYPE&charset=UTF-8&encKey=ZwvO7UCHU%2FzOn0kOYkRP4rrQ1tUkAQUNtrhpRaBvl0LGVd%2FUd33bAiyaberBXtwUGz77IH1pNFnKJ%2BFyTJ%2BkdA%3D%3D&encType=AES&orgCode=DATAHUB&sdkVersion=1.0&sign=MDQY3U56G%2FBpd3GoSqk4qLK1UnCPoGdxPEVK1DpFTS5S5kCQkoBh0O99QAJaaXTha1%2BKjABj1ZD%2FrmCpKu8ouQ%3D%3D&signType=RSA&timestamp=1526351963829&version=1.0',
+            'http://bd-int.shuli.com/gateway.do?api=slops.authcoll.channel.page&bizContent=dwEnr9I3OzxEMmIBSvvNKqeEvIMji0lybjCG1%2BxQaNK4vn0Fn8tCEIzpYAPK0yDHDqpiF0pPJJlKSEjT0hlCaun79R3MAtATTCZrIaxaW6fHlWXdJiVRFWlPAJQ0bTFV&bizType=BIZ_TYPE&charset=UTF-8&encKey=sCmkUUlbYbp6U92gmzgmZz41rRxuhVNXj0rBjdvW3Zxy1CEMcxJ2QjI7m%2FfLixTenecLICYTtr2JMfqPx3z7Rw%3D%3D&encType=AES&orgCode=DATAHUB&sdkVersion=1.0&sign=mpwMX4iPCu6FcTVSe8Vr85tFsltgIOL4gcMOVadQ6qf%2FvvmPCE69nSYjYR2Rpewp45yhcSjBTjOHDHEGAu9faw%3D%3D&signType=RSA&timestamp=1526351975495&version=1.0'
+        ]
+
+        $('#createBtn').on('click',function() {
+            $('#phoneIframe').remove()
+            var src = urls.pop();
+            var html = '<iframe  id="phoneIframe" src="'+src+'" class="phone"></iframe>'
+
+            $('body').append(html)
+        })
+
+        console.log(sessionStorage.getItem('_lg_success'))
+    })
+</script>
+</body>
+</html>

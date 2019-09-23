@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="icon" href="https://i.loli.net/2018/04/06/5ac798bcb3f46.png" type="image/x-icon">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/>
+    <title></title>
+    <!-- the docute client styles -->
+    <link rel="stylesheet" href="./assets/css/docute.css">
+    <style>
+        body {
+            font-family: Georgia, "Helvetica Neue", Helvetica, Arial, sans-serif;
+        }
+
+        .my-icon-class {
+            fill: #999999;
+        }
+
+        .my-icon-class:hover {
+            fill: red;
+        }
+
+        .markdown-body code {
+            padding: 0;
+            padding-top: .2em;
+            padding-bottom: .2em;
+            margin: 0;
+            font-size: 85%;
+            color: #687168;
+            background-color: #def5df;
+            border-radius: 3px;
+        }
+
+        .markdown-body a {
+            color: #22ab28;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+<div id="app"></div>
+<svg xmlns="http://www.w3.org/2000/svg" style="display:none">
+    <symbol id="icon-person" viewBox="0 0 16 16" width="100%" height="100%">
+        <g>
+            <path d="M12 5a4 4 0 1 0-8 0 4 4 0 0 0 8 0zM3 5a5 5 0 1 1 10 0A5 5 0 0 1 3 5z"></path>
+            <path d="M8 9c-4.397 0-8 2.883-8 6.5a.5.5 0 1 0 1 0C1 12.49 4.113 10 8 10s7 2.49 7 5.5a.5.5 0 1 0 1 0C16 11.883 12.397 9 8 9z"></path>
+        </g>
+    </symbol>
+</svg>
+<!-- load the docute client library -->
+<script src="./assets/js/docute.js"></script>
+<!-- bootstrap your docute app! -->
+<script>
+    let config = {
+        icons: [
+            {
+                icon: 'github',
+                label: 'http://git.mr.com',
+                link: 'http://git.mr.com'
+            },
+            {
+                label: '首页',
+                svgId: 'icon-person',
+                svgClass: 'my-icon-class',
+                link: '/'
+            }
+        ],
+        nav: [
+            // homepage
+            {
+                title: '首页', path: '/'
+            },
+            {
+                title: '前端规范标准', type: 'dropdown', items: [
+                    { type: 'label', title: 'Help' },
+                    { type: 'sep' },
+                    { title: '环境搭建', path: '/frontend/start' },
+                    { title: '代码规范', path: '/frontend/structure' },
+                    { type: 'label', title: 'Product' },
+                    { type: 'sep' },
+                    { title: '秀购', path: '/product/xiugou/start' },
+                    //{ title: '抽奖', path: '/product/lucky/start' },
+                    //{ title: '商学院', path: '/product/sxy/start' },
+                    //{ title: '不二闺蜜', path: '/product/girls/start' },
+                ]
+            },
+            {
+                title: '前端blog',
+                type: 'dropdown',
+                items: [
+                    { title: 'Vue小技巧', path: '/article/vue/index' },
+                    { title: 'Vue.js开发一个全局调用的MessageBox组件', path: '/article/1' },
+                    { title: 'NPM基本操作', path: '/article/2018121701' },
+                ]
+            },
+            /*{
+                title: '移动端', path: '/app/start'
+            },
+            {
+                title: 'Git', path: '/lab/git'
+            },
+            {
+                title: '实验室',
+                type: 'dropdown',
+                items: [
+                    { title: '关于require和import', path: '/frontend/module' },
+                    { title: 'iOS与Android问题列表', path: '/frontend/issues' },
+                    { title: '前端实践', path: '/frontend/solutions' },
+                    { title: '工具方法类', path: '/frontend/tools' },
+                ]
+            },*/
+
+        ],
+        home: '/doc/README' + '.md?_=' + new Date().valueOf()
+    };
+    //清除缓存
+    config.nav.forEach(function (item) {
+        if (item.path && item.path.length > 1 && !item.source) {
+            item.source = '/doc' + item.path + '.md?_=' + new Date().valueOf();
+        }
+        if (item.type === 'dropdown') {
+            item.items.forEach(function (item) {
+                item.source = '/doc' + item.path + '.md?_=' + new Date().valueOf();
+            });
+        }
+
+    });
+    docute.init(config);
+</script>
+</body>
+</html>

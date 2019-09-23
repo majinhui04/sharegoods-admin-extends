@@ -1,0 +1,80 @@
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>AntUI Demo</title>
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <meta name="apple-mobile-web-app-status-bar-style" content="black"/>
+    <meta name="format-detection" content="telephone=no"/>
+    <meta name="format-detection" content="email=no"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=0"/>
+    <script src="https://os.alipayobjects.com/rmsportal/PWIEhnWtogjxfji.js"></script>
+    <link rel="stylesheet" href="https://as.alipayobjects.com/g/component/swiper/3.2.7/swiper.min.css">
+    <script src="https://as.alipayobjects.com/g/component/swiper/3.2.7/swiper.min.js"></script>
+    <!--https://gw.alipayobjects.com/as/g/antui/antui/10.1.10/dpl/antui-all.css-->
+    <link class="J-cdn-antui"  rel="stylesheet" href="https://gw.alipayobjects.com/as/g/antui/antui/10.1.10/dpl/antui-all.css">
+    <script>
+        window.addEventListener('message',function(e){
+            if(e.source!=window.parent) return;
+            if (e.data === 'rem' || e.data === 'dpl') {
+                $('.J-cdn-antui').attr('href', 'https://gw.alipayobjects.com/as/g/antui/antui/10.1.10/' + e.data + '/antui-all.css')
+            } else {
+                $('body').html(e.data);
+            }
+        }, false);
+
+        // rem
+        var docEl = document.documentElement;
+        docEl.style.fontSize = 100 / 375 * docEl.clientWidth  + 'px';
+        window.addEventListener('resize', function() {
+            docEl.style.fontSize = 100 / 375 * docEl.clientWidth + 'px';
+        });
+    </script>
+    <style>
+        html::-webkit-scrollbar {
+            width: 4px;
+        }
+        html::-webkit-scrollbar-thumb {
+            background-color: rgba(0, 0, 0, .4);
+            border-radius: 10px;
+        }
+        body, body a, body button, body:hover {
+            cursor: url(https://gw.alipayobjects.com/zos/rmsportal/tyHSJClpWiXZgXpIZhve.png) 8 8,auto;
+        }
+    </style>
+</head>
+<body ontouchstart="" class="demo">
+
+<style>
+    body {
+        background: url("https://gw.alipayobjects.com/zos/rmsportal/hhvAJbdJZloVnodXwCvB.png") no-repeat;
+        background-size: cover;
+    }
+    .qrcode {
+        padding-top: calc(50% - 42px);
+        text-align: center;
+        color: #fff;
+    }
+    .qrcode h3 {
+        font-weight: 300;
+        font-family: "cursive";
+    }
+    .qrcode img {
+        width: 60%;
+        background: rgba(255, 255, 255, .6);
+        padding: 10px;
+        border-radius: 4px;
+        box-shadow: 0px 0px 60px rgba(16, 142, 233, .2);
+    }
+</style>
+<div class="qrcode">
+    <h3>H5 AntUI 钉钉服务群</h3>
+    <div class="am-whitespace ws20px"></div>
+    <img src="https://gw.alipayobjects.com/zos/rmsportal/kenaCwyVaLZzpYEESFvN.png" alt="" width="80%">
+</div>
+</body>
+</html>
