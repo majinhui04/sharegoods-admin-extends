@@ -1,12 +1,10 @@
 <template>
     <el-form-item :label="label" :prop="name">
-        <el-select v-model="currentValue" @input="onInputEvent" :multiple="multiple" :clearable="clearable" :filterable="filterable">
+        <el-select v-model="currentValue" @input="onInputEvent" v-bind="$attrs">
             <el-option
-                :placeholder="placeholder"
                 v-for="(item, index) in options"
                 :key="index"
                 :label="item.label"
-                :disabled="disabled"
                 :value="item.value">
             </el-option>
         </el-select>
@@ -22,14 +20,6 @@
             value: {
                 type: [String, Number, Array],
                 default: null
-            },
-            multiple: {
-                type: Boolean,
-                default: false
-            },
-            filterable: {
-                type: Boolean,
-                default: false
             },
             options: {
                 type: Array,

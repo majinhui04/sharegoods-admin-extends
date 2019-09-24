@@ -14,10 +14,6 @@ export default {
             type: String,
             default: ''
         },
-        disabled: {
-            type: Boolean,
-            default: false
-        },
         clearable: {
             type: Boolean,
             default: true
@@ -25,10 +21,6 @@ export default {
         label: {
             type: String,
             default: ''
-        },
-        placeholder: {
-            type: String,
-            default: '请填写'
         }
     },
     data() {

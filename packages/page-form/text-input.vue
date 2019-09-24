@@ -1,15 +1,10 @@
 <template>
     <el-form-item :label="label" :prop="name">
         <el-input
-            :type="type"
-            :clearable="clearable"
-            :show-password="type==='password'"
-            :name="name"
-            :rows="rows"
             :value="currentValue"
-            :disabled="disabled"
+            :clearable="clearable"
             @input="onInputEvent"
-            :placeholder="placeholder">
+            v-bind="$attrs">
         </el-input>
         <slot v-bind:scope="this"></slot>
     </el-form-item>
@@ -21,15 +16,6 @@
     export default {
         name: 'TextInput',
         props: {
-            type: {
-                type: String,
-                default: 'text'
-            },
-            // 只针对type='textarea'
-            rows: {
-                type: Number,
-                default: 4
-            },
             value: {
                 type: [String, Number],
                 default: ''

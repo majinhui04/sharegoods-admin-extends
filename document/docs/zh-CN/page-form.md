@@ -35,31 +35,83 @@
             onSubmitText="查询"
             @submit="onSearch"
         >
-            <template slot="form-header">
-                <h2>查询</h2>
-            </template>
         </sg-page-form>
+        <sg-table-view
+            :config="tableConfig"
+            :tools="tools"
+            ref="sgTableView"
+            :response-formatter="responseFormatter"
+            :params-formatter="{'activeName':'status','pageSize':'limit'}">
+        </sg-table-view>
 
-        <sg-page-form
-            :ref-obj.sync="formInfo.ref"
-            v-model="formInfo.data"
-            :field-list="formInfo.fieldList"
-            :rules="formInfo.rules"
-            :label-width="formInfo.labelWidth"
-            @update-account="onUpdateAccont"
-            @submit="onSubmit"
+        <!-- 弹窗 -->
+        <sg-page-dialog
+            :title="dialogInfo.title[dialogInfo.type]"
+            :visible.sync="dialogInfo.visible"
+            :width="dialogInfo.width"
+            :bt-loading="dialogInfo.btLoading"
+            :bt-list="dialogInfo.btList"
+            @handleClick="trigger"
         >
-            <template slot="form-header">
-                <h2>新增账号</h2>
-            </template>
-            <el-form-item label="测试" prop="test" slot="test">
-                <el-input type="text" name="test" v-model="formInfo.data.test"></el-input>
-            </el-form-item>
-        </sg-page-form>
+            <sg-page-form
+                size="mini"
+                class="my-form"
+                :ref-obj.sync="formInfo.ref"
+                v-model="formInfo.data"
+                :field-list="formInfo.fieldList"
+                :rules="formInfo.rules"
+                :label-width="formInfo.labelWidth"
+            >
+                <el-form-item label="头像" prop="avatar" slot="avatar" class="el-form-block">
+                    <el-upload name="file" action="/">上传</el-upload>
+                    <img :src="formInfo.data.avatar" alt="" v-if="formInfo.data.avatar"
+                         style="width: 80px;height: 80px;">
+                </el-form-item>
+                <div slot="form-footer"></div>
+            </sg-page-form>
+        </sg-page-dialog>
     </div>
 </template>
+
 <script>
+    const UserModel = {
+        account: '',
+        nickName: '',
+        sex: '',
+        password: '',
+        password2: '',
+        birthday: '',
+        avatar: '',
+        note: ''
+    };
+    const pickerOptions = {
+        disabledDate(time) {
+            return time.getTime() > Date.now();
+        },
+        shortcuts: [{
+            text: '今天',
+            onClick(picker) {
+                picker.$emit('pick', new Date());
+            }
+        }, {
+            text: '昨天',
+            onClick(picker) {
+                const date = new Date();
+                date.setTime(date.getTime() - 3600 * 1000 * 24);
+                picker.$emit('pick', date);
+            }
+        }, {
+            text: '一周前',
+            onClick(picker) {
+                const date = new Date();
+                date.setTime(date.getTime() - 3600 * 1000 * 24 * 7);
+                picker.$emit('pick', date);
+            }
+        }]
+    };
     export default {
+        name: 'DemoTableQuery',
+        components: {},
         data() {
             var validatePass = (rule, value, callback) => {
                 if (!/^[\w_-]{6,16}$/.test(value)) {
@@ -75,11 +127,18 @@
                     callback();
                 }
             };
+
             return {
+                // 文章相关
+                articleInfo: {},
                 // 查询
                 queryInfo: {
                     labelWidth: '80px',
-                    data: {},
+                    data: {
+                        account: '',
+                        endTime: '2019/09/01',
+                        phone: '13456525308'
+                    },
                     fieldList: [
                         {
                             name: 'account',
@@ -89,18 +148,33 @@
                             class: 'form-item-account'
                         },
                         {
-                            name: 'updatetime',
-                            label: '查询时间',
-                            type: 'datetimerange',
-                            valueFormat: 'yyyy-MM-dd HH:mm:ss',
-                            format: 'yyyy-MM-dd HH:mm:ss',
-                            defaultTime:null,
+                            name: 'endTime',
+                            label: '截止时间',
+                            type: 'datetime',
+                            'value-format': 'yyyy-MM-dd',
+                            format: 'yyyy-MM-dd',
                             fieldType: 'date',
-                            pickerOptions: 'pickerOptions'
+                            pickerOptions: {
+                                ...pickerOptions
+                            }
+                        },
+                        {
+                            name: 'updatetime',
+                            label: '时间范围',
+                            type: 'datetimerange',
+                            'value-format': 'yyyy-MM-dd HH:mm:ss',
+                            format: 'yyyy-MM-dd',
+                            fieldType: 'date',
+                            defaultTime: ['00:00:00', '23:59:59'],
+                            pickerOptions: {
+                                ...pickerOptions
+                            }
                         },
                         {
                             name: 'sex',
                             label: '性别',
+                            // multiple: true,
+                            // size: 'mini',
                             fieldType: 'select',
                             options: [
                                 {
@@ -117,26 +191,37 @@
                             name: 'phone',
                             label: '手机号码',
                             fieldType: 'input'
-                        },
+                        }
+                    ]
+                },
+                // 弹窗相关
+                dialogInfo: {
+                    width: '600px',
+                    title: {
+                        create: '添加',
+                        update: '编辑'
+                    },
+                    visible: false,
+                    type: '',
+                    btLoading: false,
+                    btList: [
+                        { label: '关闭', type: '', icon: '', event: 'on-dialog-close', show: true },
                         {
-                            name: 'phone1',
-                            label: '手机号码',
-                            fieldType: 'input'
+                            label: '保存',
+                            type: 'primary',
+                            icon: '',
+                            event: 'on-form-save',
+                            saveLoading: false,
+                            show: true
                         }
                     ]
                 },
                 // 表单相关
                 formInfo: {
                     ref: null,
+                    labelWidth: '100px',
                     data: {
-                        test: '',
-                        //account: '',
-                        password: '',
-                        password2: '',
-                        note: '',
-                        birthday: '',
-                        updatetime: '',
-                        sex: 2
+                        ...UserModel
                     },
                     fieldList: [
                         {
@@ -144,6 +229,27 @@
                             label: '账号',
                             fieldType: 'input',
                             class: 'form-item-account'
+                        },
+                        {
+                            name: 'nickName',
+                            label: '昵称',
+                            fieldType: 'input'
+                        },
+                        {
+                            name: 'sex',
+                            label: '性别',
+                            fieldType: 'radio',
+                            class: 'el-form-block',
+                            options: [
+                                {
+                                    label: '男',
+                                    value: 1
+                                },
+                                {
+                                    label: '女',
+                                    value: 2
+                                }
+                            ]
                         },
                         {
                             name: 'password',
@@ -165,37 +271,15 @@
                             valueFormat: 'yyyy-MM-dd'
                         },
                         {
-                            name: 'updatetime',
-                            label: '编辑时间',
-                            type: 'datetimerange',
-                            valueFormat: 'yyyy-MM-dd HH:mm:ss',
-                            format: 'yyyy-MM-dd HH:mm:ss',
-                            fieldType: 'date'
+                            name: 'avatar',
+                            fieldType: 'slot'
                         },
                         {
                             name: 'note',
                             label: '备注',
                             type: 'textarea',
-                            fieldType: 'input'
-                        },
-                        {
-                            name: 'test',
-                            fieldType: 'slot'
-                        },
-                        {
-                            name: 'sex',
-                            label: '性别',
-                            fieldType: 'select',
-                            options: [
-                                {
-                                    label: '男',
-                                    value: 1
-                                },
-                                {
-                                    label: '女',
-                                    value: 2
-                                }
-                            ]
+                            fieldType: 'input',
+                            class: 'el-form-block'
                         }
                     ],
                     rules: {
@@ -212,54 +296,221 @@
                             { required: true, message: '请输入', trigger: 'blur' },
                             { min: 3, max: 5, message: '长度在 3 到 5 个字符', trigger: 'blur' }
                         ]
-                    },
-                    labelWidth: '80px'
+                    }
+                },
+                tools: [{
+                    label: '创建',
+                    onClick: this.addUser
+                }],
+                tableConfig: {
+                    columns: [
+                        {
+                            width: 55,
+                            type: 'selection'
+                        },
+                        {
+                            label: '性别',
+                            prop: 'sex'
+                        },
+                        {
+                            label: '用户名',
+                            prop: 'account'
+                        },
+                        {
+                            label: '昵称',
+                            prop: 'nickName'
+                        },
+                        {
+                            label: '修改时间',
+                            prop: 'updateTime'
+                        },
+                        {
+                            width: 300,
+                            label: '操作',
+                            type: 'button',
+                            prop: 'title',
+                            buttons: [
+                                {
+                                    customRender(row) {
+                                        if (row.status === 'draft') {
+                                            return '草稿';
+                                        } else {
+                                            return '';
+                                        }
+                                    },
+                                    onClick: (row) => {
+                                        console.log('test', row);
+                                    }
+                                },
+                                {
+                                    label: '删除',
+                                    type: 'danger',
+                                    onClick: (row) => {
+                                        console.log('删除', row);
+                                        this.$confirm('此操作将永久删除该文件, 是否继续?', '提示', {
+                                            confirmButtonText: '确定',
+                                            cancelButtonText: '取消',
+                                            type: 'warning'
+                                        }).then(() => {
+                                            this.$notify({
+                                                title: 'Success',
+                                                message: '操作成功',
+                                                type: 'success',
+                                                duration: 2000
+                                            });
+                                            this.$refs['sgTableView'].fetchList();
+                                        }).catch(() => {
+                                            this.$message({
+                                                type: 'info',
+                                                message: '已取消删除'
+                                            });
+                                        });
+                                    }
+                                },
+                                {
+                                    label: '修改',
+                                    onClick: this.editUser
+                                }
+                            ]
+                        }
+                    ],
+                    load: this.load
                 }
             };
         },
+        created() {
+            this.queryOrderType();
+        },
         mounted() {
         },
-        created(){
-            this.queryInfo.fieldList[1].pickerOptions = {
-                onPick: ({ maxDate, minDate }) => {
-                this.pickerMinDate = minDate.getTime();
-                if (maxDate) {
-                    this.pickerMinDate = '';
-                }
-            },
-            disabledDate: time => {
-                if (this.pickerMinDate !== '') {
-                    const day31 = (31 - 1) * 24 * 3600 * 1000;
-                    let maxTime = this.pickerMinDate + day31;
-                    let minTime = this.pickerMinDate - day31;
-                    if (maxTime > new Date()) {
-                        maxTime = new Date();
-                    }
-                    return time.getTime() > maxTime || time.getTime() < minTime;
-                }
-                return time.getTime() > Date.now();
-            }
-            }
-
-        },
         methods: {
+            addUser() {
+                this.formInfo.fieldList.forEach(item => {
+                    delete item.show;
+                    delete item.disabled;
+                });
+                // this.$set(this.formInfo,'data',{nickNname:''})
+                // this.formInfo.data = {};
+                Object.assign(this.formInfo.data, UserModel);
+                this.dialogInfo.type = 'create';
+                this.dialogInfo.visible = true;
+            },
+            editUser(row) {
+                this.dialogInfo.type = 'update';
+                // this.formInfo.data =  { ...row } 会使得数据双向绑定失效
+                Object.assign(this.formInfo.data, { ...row });
+                this.formInfo.fieldList.forEach(item => {
+                    if (['password', 'password2'].includes(item.name)) {
+                        item.show = false;
+                    }
+                    if (['account'].includes(item.name)) {
+                        item.disabled = true;
+                    }
+                });
+                this.dialogInfo.visible = true;
+            },
+            trigger(event, data) {
+                let fnName = event.split('-').map((item, index) => {
+                    if (index !== 0) {
+                        return item.slice(0, 1).toUpperCase() + item.slice(1);
+                    } else {
+                        return item;
+                    }
+                }).join('');
+                this[fnName] && this[fnName](data);
+                console.log(12, fnName, event, data);
+            },
+            onDialogClose() {
+                this.formInfo.ref.resetFields();
+                this.dialogInfo.visible = false;
+            },
+            onFormSave() {
+                this.formInfo.ref.validate(valid => {
+                    if (valid) {
+                        let data = this.formInfo.data;
+                        this.dialogInfo.btLoading = true;
+                        this.$api.userSave(data).then(res => {
+                            this.$message({
+                                showClose: true,
+                                message: '保存成功',
+                                type: 'success',
+                                duration: 5000
+                            });
+
+                            setTimeout(() => {
+                                this.dialogInfo.btLoading = false;
+                                this.onDialogClose();
+                            }, 2000);
+                        }).catch(e => {
+                            console.error(e);
+                            this.$message({
+                                showClose: true,
+                                message: '保存失败',
+                                type: 'error',
+                                duration: 5000
+                            });
+                            this.dialogInfo.btLoading = false;
+                        });
+                    } else {
+                        this.$message({
+                            showClose: true,
+                            message: '校验失败',
+                            type: 'error',
+                            duration: 3500
+                        });
+                    }
+                });
+            },
             onSearch() {
                 console.log('查询条件', this.queryInfo.data);
             },
-            onUpdateAccont(val) {
-                console.log('账号更新', val);
+            handleClick(event, data) {
+                console.log(event, data);
             },
-            onSubmit() {
-                console.log(this.formInfo.data);
-                this.formInfo.ref.validate(valid => {
-                    if (valid) {
-                        console.log('success');
-                    }
+            handleLink(row) {
+            },
+            responseFormatter(res) {
+                const body = res.data || {};
+                const list = body.data || body.items || [];
+                const total = body.totalNum || body.total || 0;
+                return {
+                    list,
+                    total
+                };
+            },
+            search() {
+                console.log('getFormData', this.formData);
+                this.$refs['sgTableView'].fetchList({ page: 1 });
+            },
+            queryOrderType() {
+
+            },
+            load(params) {
+                const data = { ...params, ...this.queryInfo.data };
+                return this.$api.userList(data).then(res => {
+                    console.log(res);
+                    return res;
+                }).catch(err => {
+                    console.log(err);
+                    return err;
                 });
             }
         }
     };
 </script>
+
+<style rel="stylesheet/scss" lang="scss">
+    .my-form {
+        .el-form-item {
+            display: inline-block;
+            width: 48%;
+        }
+        .el-form-block {
+            width: 100%;
+        }
+    }
+</style>
+
 
 ```
 :::

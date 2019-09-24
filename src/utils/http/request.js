@@ -69,6 +69,10 @@ class Request {
         this.httpClient = httpClient;
     }
 
+    axios(config) {
+        return this.httpClient.request(config);
+    }
+
     request(method, url, params = null, data = null) {
         const config = {
             url: url,
@@ -131,7 +135,7 @@ class Request {
         }
 
         return this.httpClient.request(config).then(response => {
-            if(response.headers) {
+            if (response.headers) {
                 let filename = response.headers['x-suggested-filename'];
 
                 if (!filename) {
