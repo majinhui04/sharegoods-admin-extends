@@ -95,7 +95,8 @@
                             valueFormat: 'yyyy-MM-dd HH:mm:ss',
                             format: 'yyyy-MM-dd HH:mm:ss',
                             defaultTime:null,
-                            fieldType: 'date'
+                            fieldType: 'date',
+                            pickerOptions: 'pickerOptions'
                         },
                         {
                             name: 'sex',
@@ -217,6 +218,29 @@
             };
         },
         mounted() {
+        },
+        created(){
+            this.queryInfo.fieldList[1].pickerOptions = {
+                onPick: ({ maxDate, minDate }) => {
+                this.pickerMinDate = minDate.getTime();
+                if (maxDate) {
+                    this.pickerMinDate = '';
+                }
+            },
+            disabledDate: time => {
+                if (this.pickerMinDate !== '') {
+                    const day31 = (31 - 1) * 24 * 3600 * 1000;
+                    let maxTime = this.pickerMinDate + day31;
+                    let minTime = this.pickerMinDate - day31;
+                    if (maxTime > new Date()) {
+                        maxTime = new Date();
+                    }
+                    return time.getTime() > maxTime || time.getTime() < minTime;
+                }
+                return time.getTime() > Date.now();
+            }
+            }
+
         },
         methods: {
             onSearch() {

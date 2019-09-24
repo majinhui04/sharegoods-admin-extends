@@ -9,7 +9,7 @@
             :format="format"
             :default-time="defaultTime"
             :disabled="disabled"
-            :pick-options="pickerOptions"
+            :picker-options="pickerOptions"
             :placeholder="placeholder">
         </el-date-picker>
     </el-form-item>
