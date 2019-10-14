@@ -5,7 +5,6 @@ import configureTimeout from './interceptors/timeout';
 // import axiosRetry from 'axios-retry'
 
 class Request {
-    commonConfig = {}
     constructor(options) {
         const opt = {
             ...{
@@ -23,7 +22,7 @@ class Request {
             },
             ...options
         };
-        this.commonConfig = opt;
+        this.$options = opt;
 
         const httpClient = axios.create({
             baseURL: opt.baseUrl,
@@ -124,7 +123,7 @@ class Request {
         const config = {
             url: url,
             method: method,
-            timeout: this.commonConfig.timeout || 20000,
+            timeout: this.$options.timeout || 20000,
             responseType: 'arraybuffer' // blob
         };
 
