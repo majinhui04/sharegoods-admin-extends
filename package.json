@@ -42,6 +42,7 @@
         "@vue/cli-service": "3.7.0",
         "@vue/component-compiler-utils": "^3.0.0",
         "@vue/eslint-config-standard": "4.0.0",
+        "babel-eslint": "^10.0.3",
         "chalk": "2.4.1",
         "chokidar": "2.1.5",
         "core-js": "2.6.5",

@@ -125,7 +125,7 @@ class Request {
             url: url,
             method: method,
             timeout: this.commonConfig.timeout || 20000,
-            responseType: "arraybuffer" // blob
+            responseType: 'arraybuffer' // blob
         };
 
         if (params) {
